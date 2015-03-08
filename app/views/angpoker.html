@@ -1,0 +1,24 @@
+
+<div class="wrapperrooms">
+  <br/>
+  <h3 class="room-head">Poker Rooms
+    <a href="javascript:" class="btn btn-xs btn-primary" ng-hide="isNew == true" ng-click="isNew = true; roomName = ''; ">New Room</a>
+    <input ng-show="isNew == true" class="input-sm form-control cust-text" type="text" ng-model="roomName" placeholder="Room Name" />
+    <a href="javascript:" ng-disabled="!roomName" ng-show="isNew == true" class="btn btn-xs btn-info" ng-click="newRoom()">Create</a>
+  </h3>
+ 
+  <input type="text" class="form-control" placeholder="Search Rooms" ng-model="search">
+  <div class="rooms">
+    <div ng-repeat="item in rooms | filter:search" class="room">
+      <h4>{{item.roomname}}</h4>
+      <h6> <em> by : {{item.createdBy}} </em></h6>
+      <a class="btn btn-primary btn-xs pull-right join-room" href="javascript:" ng-click="joinRoom($index)">Join</a>
+      <a class="btn btn-danger btn-xs pull-right" ng-click="deleteRoom($index)" ng-show="user.profile.username === item.createdBy">Delete</a>
+ 	  <div style="clear: both;"></div>
+    </div>
+
+    <div class="room" ng-show="rooms.length == 0" ng-cloak>
+      <h3>No Rooms Available. Create your own!</h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,563 @@
+/* Space out content a bit billy */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+table{
+  width: 500px;
+  height: 200px;
+  float:right;
+}
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+#mainContain{
+  max-width: 1200px;
+}
+
+/*new css*/
+
+.tableBody{
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+.tableBody > h1{
+  text-align: center;
+}
+
+.table{
+  display:inline-block;
+  width: 34em;
+  height: 17em;
+  text-align: center;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+  background: rgba(98,125,77,1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(98,125,77,1)), color-stop(100%, rgba(31,59,8,1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
+  background: radial-gradient(ellipse at center, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', endColorstr='#1f3b08', GradientType=1 );
+  
+  border: 10px ridge #00018F;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+
+  color: red;
+
+}
+
+.table > .topcoat-button-bar{
+  display:inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.seat {
+    display: table-cell;
+    overflow: visible;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -32px;
+    margin-left: -32px;
+    padding:3px;
+    border-radius:10px;
+    background-color:#dfe3ea;
+    border: solid 2px black ;
+
+    text-align: center;
+    vertical-align: middle;
+    left: 50%;
+    color: #333;
+}
+
+.occupied{
+  width: 100px;
+  height: 100px;
+}
+
+.seatAvatar{
+  position: absolute;
+  top: -53px;
+  left: 50%;
+  margin-left: -32px;
+}
+
+.table li{
+  list-style: none;
+}
+
+.seat h6{
+  font-size: 1em;
+  margin-bottom: 1px;
+  margin-top: 0px;
+}
+
+.seat div{
+    font-size: .8em;
+}
+.seat .btn{
+  font-size: .8em;
+}
+.seat div{
+  line-height: 2em;
+  background: #f5f5f5;
+  display: inline;
+  border-radius: 10px;
+}
+.actionButs .btn-xs {
+  margin: 1px;
+  box-shadow: 5px 5px 5px #000000;
+}
+.actionButs{
+  position: absolute;
+  height: 21px;
+  width: 118.5px;
+  left: -4px;
+  bottom: -23px;
+  overflow: visible;
+}
+.actionButs.ng-hide-remove{
+  animation: flipInX 1s;
+}
+/*.actionButs.ng-hide-add{
+  animation: flipOutX 1s;
+}*/
+ /*choose room style*/
+.room-head {
+  margin-top: -35px;
+  border-bottom: 2px solid #CCC;
+  padding: 20px 20px 8px;
+}
+.room h4, .room h6{
+  display: inline-block;
+  margin: .25em;
+}
+ 
+.prof-img {
+  vertical-align: bottom;
+}
+ 
+.welcome-panel {
+  padding-right: 20px;
+}
+ 
+.cust-text {
+  width: 22%;
+  display: initial;
+  vertical-align: middle;
+  margin-left: 11px;
+}
+ 
+.rooms,.messages {
+  border: 1px solid #e8e7e8;
+  margin: 20px;
+}
+ 
+.room {
+  border: 1px solid #c7c7c7;
+  margin-bottom: -1px;
+  background: #fff;
+  -webkit-transition: background .5s;
+  transition: background .5s;
+  padding: 10px;
+}
+
+.room:hover {
+  background: #e6e6e6;
+}
+ 
+.join-room {
+  margin-left: 5px;
+}
+ 
+.messages {
+  height: 277px;
+  overflow: auto;
+  border: 1px solid #e8e7e8;
+}
+ 
+.message {
+  border-bottom: 1px solid #c7c7c7;
+  background: #fff;
+  height: 65px;
+  -webkit-transition: background .5s;
+  transition: background .5s;
+  padding: 3px 3px 3px 10px;
+}
+ 
+.message img {
+  vertical-align: baseline;
+  margin-right: 9px;
+}
+ 
+.chat-input {
+  bottom: 0;
+  width: 93%;
+  text-align: center;
+  margin-bottom: 14px;
+  padding-left: 8px;
+}
+ 
+.back-btn {
+  vertical-align: bottom;
+  margin-left: 20px;
+}
+
+/*chatbox css*/
+ .example-base {
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #333; }
+
+.hide {
+  display: none; }
+
+.l-demo-container {
+  width: 100%;
+  height: 300px;
+  margin: 0px auto 0px auto; 
+}
+
+.l-popout {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+  .l-popout iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0; }
+
+.example-chat {
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  background-color: #dfe3ea;
+  border: 1px solid #CCC;
+  overflow: auto;
+  padding: 0px;
+  font-size: 1em;
+  line-height: 1em;
+  color: #666; }
+  .example-chat header {
+    background-color: #EEE;
+    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#DDDDDD));
+    background: -webkit-linear-gradient(top, #EEEEEE, #DDDDDD);
+    background: linear-gradient(top, #EEEEEE, #DDDDDD);
+    -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.9), 0px 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.9), 0px 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px 3px 0px 0px;
+    border-bottom: 1px solid #CCC;
+    line-height: 1em;
+    font-size: 1em;
+    text-align: center;
+    color: #999; }
+  .example-chat input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    padding: 0px 10px;
+    height: 30px;
+    font-size: 1em;
+    width: 100%;
+    font-weight: normal;
+    outline: none; }
+  .example-chat .example-chat-toolbar {
+    background-color: #FFF;
+    padding: 10px;
+    position: relative;
+    border-bottom: 1px solid #CCC; }
+    .example-chat .example-chat-toolbar label {
+      text-transform: uppercase;
+      line-height: 2em;
+      font-size: .9em;
+      color: #999;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      z-index: 1; }
+    .example-chat .example-chat-toolbar input {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border: 1px solid #FFF;
+      text-align: center;
+      color: #999; }
+      .example-chat .example-chat-toolbar input:active, .example-chat .example-chat-toolbar input:focus {
+        color: #1d9dff;
+        border: 1px solid #FFF; }
+  .example-chat ul {
+    list-style: none;
+    margin: 0px;
+    padding: 20px;
+    height: 150px;
+    overflow: auto; }
+    .example-chat ul li {
+      margin-bottom: 10px;
+      line-height: 1em; }
+      .example-chat ul li:last-child {
+        margin: 0px; }
+    .example-chat ul .example-chat-username {
+      margin-right: 10px; }
+  .example-chat footer {
+    display: block;
+    padding: 10px; }
+    .example-chat footer input {
+      border: 1px solid #ced3db;
+      height: 2em; }
+
+#example-messages{
+  text-align: left;
+  font-size:.8em; 
+}
+
+#colorholder {
+  width: 480px;
+  height: 30px;
+  border: 2px solid #424547;
+  margin: 5px auto 0px auto; }
+
+#drawing-canvas {
+  border: 3px solid #999; }
+
+.colorbox {
+  width: 22px;
+  height: 22px;
+  margin: 1px;
+  display: inline-block;
+  border: 3px solid black; }
+
+.example-leaderboard {
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  overflow: auto;
+  color: #666; }
+  .example-leaderboard table {
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-collapse: collapse; }
+    .example-leaderboard table th {
+      background: #EEE;
+      border-bottom: 1px solid #CCC;
+      font-size: 12px;
+      color: #999;
+      padding: 5px 10px;
+      text-align: left; }
+    .example-leaderboard table td {
+      border-bottom: 1px solid #EEE;
+      padding: 10px;
+      color: #28a562; }
+      .example-leaderboard table td em {
+        font-style: normal;
+        font-weight: bold;
+        color: #666; }
+    .example-leaderboard table tr:first-child td {
+      background: green; }
+  .example-leaderboard input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    padding: 0px 10px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: normal;
+    outline: none;
+    border: 1px solid #CCC; }
+    .example-leaderboard input.example-leaderboard-name {
+      width: 186px;
+      margin-right: 10px; }
+    .example-leaderboard input.example-leaderboard-score {
+      width: 300px; }
+
+#highestscore {
+  margin-top: 20px;
+  font-size: 14px; }
+
+/* Presence */
+#presenceDiv {
+  text-align: center; }
+
+/* Tetris */
+.tetris-body {
+  width: 600px; }
+
+#canvas0, #canvas1 {
+  display: inline-block;
+  border: 4px solid #424547; }
+
+#restartButton {
+  margin-top: 5px; }
+
+#gameInProgress {
+  font-size: 14px; }
+
+.wrapper{
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.wrapperrooms{
+  display: table;
+  height: 80%;
+  width: 100%;
+  max-width: 700px;
+}
+
+
+.control{
+  display: table-cell;
+  height: 100%;
+  width: 30%;
+  margin-right: -5px;
+  vertical-align: middle;
+}
+
+.display{
+  display: table-cell;
+  height: 100%;
+  width: 70%;
+  margin-left: -5px;
+  vertical-align: middle;
+}
+
+.ppbutton{
+  border: solid 2px;
+  border-color: blue;
+}
+
+.action{
+  border: solid 2px;
+  border-color: red;
+  box-shadow: 5px 5px 5px #000000;
+  z-index: 100;
+}
+.ng-hide-add, .ng-hide-remove {
+    /* ensure visibility during the transition */
+    display: inline-block !important; /* yes, important */
+}
+.card.ng-hide-remove{
+  animation: flipInY 1s;
+}
+.card.ng-hide-add{
+  animation: flipOutY 1s;
+}
+
+div.ng-enter {
+  animation: fadeIn .5s;
+}
+div.ng-leave {
+  animation: fadeOut .5s;
+}
+
+.card {
+  display: inline-block;
+  width: 2.8em;
+}
+
+.navImage{
+  margin-top: -20px;
+}
+
+@media (min-width: 768px){
+  #mainContain {
+    width: 850px;
+  }
+}
+
+@media (min-width: 992px){
+  .mainContain {
+    width: 970px;
+  }
+}
