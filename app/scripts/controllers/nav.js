@@ -31,10 +31,12 @@ if($scope.signedIn()){
 }
 
 $scope.user = Auth.resolveUser();
-if(!$scope.user.profile){
+
+if($scope.user&&!$scope.user.profile){
 	var ref = new Firebase(FIREBASE_URL);
 	$scope.user.profile = $firebaseObject(ref.child('profile').child($scope.user.uid));
 }
+
 
 $scope.usercheck = Auth.checkUser();
 $scope.usercheck.$onAuth(function(authData){
