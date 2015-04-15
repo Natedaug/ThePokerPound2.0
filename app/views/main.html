@@ -1,10 +1,44 @@
-<div class="jumbotron">
-  <h1>'Beware!'</h1>
-  <p class="lead">
-    <img src="images/PokerPound-logo1.jpg" alt="Poker Pound Logo"><br>
-    Pounding poker since 1983
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
 
-</div>
+	
+
+	<div class="jumbotron">
+	  <h1>The PokerPound 2.0</h1>
+	  <div class="btn signInButton" ng-click='toggleModal()'>Sign Up/In</div>
+	  <p>
+	  	<br>
+	  	<img src="images/boxing_gloves_playing_cards.jpg" alt="Poker Pound Logo">
+	  </p>
+	  <p class="lead">
+	    An online multiplayer poker game built with AngularJS and firebase.
+	  </p>
+	  <p><a ng-click='toggleModal()'>Sign up</a> and join our online poker community!</p>
+	</div>
+
+	<ul class="gameFeatures">
+		<li>
+			Compete against other live players or our own custom poker bots.
+		</li>
+		<li>
+			Create your own custom cashgame, tournament or sit-n-go.
+		</li>
+		<li>
+			Send messages and invite other players to your game.
+		<li>
+		    Keep track of your stats and see how you stack up on the leader board.
+		</li>
+	</ul>
+
+	<modal-dialog show='modalShown' width='750px' height='250px'>
+		<div class="auth-forms container" ng-controller="AuthCtrl">
+
+			<h2>Register/Log In</h2>
+
+			<form ng-submit="login()">
+				<p ng-show="error" class="text-danger">{{ error }}</p>
+			  	<input type="name" ng-model="user.username" placeholder="Username" class="form-control"><br>
+			    <!--<input type="e-mail" ng-model="user.email" value="{{user.username}}@{{user.username}}.com" class="form-control"><br>-->
+			    <input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
+			    <input type="submit" value="Register" class="btn registerButton" />
+			</form>
+		</div>
+	</modal-dialog>

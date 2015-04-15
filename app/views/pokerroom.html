@@ -1,75 +1,102 @@
 <div class="wrapper">
 	
-	{{user.profile.username}}<br>
-	
-	<a class="btn btn-primary btn-xs" ng-show="table.game.actionOn===undefined&&roomMaster===user.profile.username" ng-click="startGame()">Start Game</a><br>
-	<a class="btn btn-primary btn-xs" ng-hide="table.game.actionOn===undefined||table.game.roundName!=='Showdown'||roomMaster!==user.profile.username" ng-click="newHand()">New Hand<br></a><br>
-	Sitting: {{user.profile.sitting}}<br>
-	Seat: {{user.profile.seat}}<br>
-      <br>
-      <br>
 	<div class="tableBody">
+
+		<div class="pokertable">
+
+			<ul>
+
+				<li class = "seater" ng-repeat="seat in table.seats track by $index" ng-init="seatIndex = $index">
 		
-	<div class="table">
+					<seat class='seat' id='seat{{$index}}' wager="{{collectWager}}"index="{{$index}}" length="{{table.seats.length}}" ng-class="{action: table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown', ppbutton: table.players[table.dealer].seat===$index, occupied: table.players[table.seats[$index]]}" ng-transclude>
+						<progress-arc ng-show="table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown'"stroke-width="5" size="150" complete="timeLimit" >
+						</progress-arc>
+						<img ng-show="table.players[table.seats[$index]]&&table.players[table.seats[$index]].user!=='bot'" ng-src="images/half-size-{{ userList[table.players[table.seats[$index]].user].avatar }}" class="seatAvatar nav-pic" />
+						
+						<h6 ng-show="table.seats[$index]!==false">
+							<div class="nameDisp">
+								{{ table.players[table.seats[$index]].playerName}}
+							</div>
+							<!--Front of cards-->
+							<div class="wholeCards">
+								<img ng-show="!table.players[table.seats[$index]].folded&&table.players[table.seats[$index]].cards[0]&&(table.game.roundName==='Showdown'||table.players[table.seats[$index]].user === user.uid)" class='card' ng-src="images/PlayingCards/SVG/{{table.players[table.seats[$index]].cards[0]}}.svg" alt="table.players[table.seats[$index]].cards">
+								<img ng-show="!table.players[table.seats[$index]].folded&&table.players[table.seats[$index]].cards[1]&&(table.game.roundName==='Showdown'||table.players[table.seats[$index]].user === user.uid)" class='card' ng-src="images/PlayingCards/SVG/{{table.players[table.seats[$index]].cards[1]}}.svg" alt="table.players[table.seats[$index]].cards">
+							</div>
+							<div class="wholeCards">
+								<!--Back of cards-->
+								<img ng-show="table.players[table.seats[$index]].cards[0]&&(table.game.roundName!=='Showdown'||table.players[table.seats[$index]].folded)&&table.players[table.seats[$index]].user !== user.uid" class='card' ng-src="images/cardBack.png" alt="table.players[table.seats[$index]].cards">
+								<img ng-show="table.players[table.seats[$index]].cards[1]&&(table.game.roundName!=='Showdown'||table.players[table.seats[$index]].folded)&&table.players[table.seats[$index]].user !== user.uid" class='card' ng-src="images/cardBack.png" alt="table.players[table.seats[$index]].cards">
+							</div>
+							<span class="folded"ng-show="table.players[table.seats[$index]].folded">FOLDED<br></span>
+							
+							<span class="chipsDisp">{{ table.players[table.seats[$index]].chips }}</span><br>
 
-	<ul>
+							<span class="btn-group btn-group-xs actionButs" role="group" aria-label="action controls" ng-show="table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown'&&user.uid===table.players[table.seats[$index]].user">
+								<a class="btn btn-primary" ng-click="call($index)"><span ng-show="table.game.maxBet > table.game.bets[table.seats[$index]]">Call</span><span ng-hide="table.game.maxBet > table.game.bets[table.seats[$index]]">Check</span>
+								</a>
+								<a class="btn btn-primary"  ng-click="raise($index)">Raise
+								</a>
+								<a class="btn btn-primary"  ng-click="fold($index)">Fold
+								</a>
+							</span>
+						</h6>
+						<span ng-show="seat===false">Seat {{$index + 1}}<br></span>
+						<a class="btn btn-primary btn-xs sCenter" ng-click="sitDown($index)" ng-show="!user.profile.sitting&&seat===false&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')">Sit Down</a>
+						
+						<a class="btn btn-primary btn-xs" ng-click="addPlayer($index)" ng-show="user.profile.sitting&&seat===false&&roomMaster===user.profile.username&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')" title="Add Player">+</a>
+					
+						<a class="btn btn-primary btn-xs removeBut" ng-click="removePlayer($index)" ng-show="user.profile.sitting&&seat!==false&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')&&table.players[table.seats[$index]].user==='bot'&&roomMaster===user.profile.username">Remove Player</a>
+						<div class="betDisp">
+							<div class="badge" ng-show="table.game.bets[table.seats[$index]]!==undefined">
+								{{table.game.bets[table.seats[$index]]}} 
+							</div>
+							<div class="badge" ng-show="table.game.bets[table.seats[$index]]!==undefined&&table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown'&&table.game.maxBet-table.game.bets[table.seats[$index]]>0">
+								+ {{table.game.maxBet-table.game.bets[table.seats[$index]]}}
+							</div>
+						</div>
+						<div class="dealerButt" ng-show="table.players[table.dealer].seat===$index">
+							<span class="badge">Dealer</span>
+						</div>
+					</seat>
+				</li>
+			</ul>
 
-		<li class = "seater" ng-repeat="seat in table.seats track by $index" ng-init="seatIndex = $index">
-<!--action: table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown', -->
-			<seat class='seat' id='seat{{$index}}' index="{{$index}}" length="{{table.seats.length}}" ng-class="{action: table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown', ppbutton: table.players[table.dealer].seat===$index, occupied: table.players[table.seats[$index]]}" ng-transclude>
-				
-				<img ng-show="table.players[table.seats[$index]]&&table.players[table.seats[$index]].user!=='bot'" ng-src="images/half-size-{{ userList[table.players[table.seats[$index]].user].avatar }}" class="seatAvatar nav-pic" />
-				
-				<h6 ng-show="table.seats[$index]!==false">
-					{{ table.players[table.seats[$index]].playerName }}<br>
-					<!--<span ng-show="table.players[table.seats[$index]].cards[0]">-->
-						<img ng-show="table.players[table.seats[$index]].cards[0]" class='card' ng-src="images/PlayingCards/SVG/{{table.players[table.seats[$index]].cards[0]}}.svg" alt="table.players[table.seats[$index]].cards">
-						<img ng-show="table.players[table.seats[$index]].cards[1]" class='card' ng-src="images/PlayingCards/SVG/{{table.players[table.seats[$index]].cards[1]}}.svg" alt="table.players[table.seats[$index]].cards"><br>
-						<span ng-show="table.players[table.seats[$index]].folded">FOLDED</br></span>
-					<!--</span>-->
-					{{ table.players[table.seats[$index]].chips }}<br>
+			<div class="tableDisp">
+					<br>
+					<div id="potDisp">
+						<span> Pot: {{table.game.pot}} </span>
+					</div>
+					<br>
+					<br>
+					<a class="btn btn-primary btn-xs" id="startGameButt" ng-show="table.game.actionOn===undefined&&roomMaster===user.profile.username" ng-click="startGame()">Start Game</a><br>
+					<a class="btn btn-primary btn-xs" id="newGameButt" ng-hide="table.game.actionOn===undefined||table.game.roundName!=='Showdown'||roomMaster!==user.profile.username" ng-click="newHand()">New Hand</a>
 
-					<span class="btn-group actionButs" role="group" aria-label="action controls" ng-show="table.players[table.game.actionOn].seat===$index&&table.game.roundName!=='Showdown'&&user.uid===table.players[table.seats[$index]].user">
-						<a class="btn btn-primary btn-xs" ng-click="call($index)"><span ng-show="table.game.maxBet > table.game.bets[table.seats[$index]]">Call</span><span ng-hide="table.game.maxBet > table.game.bets[table.seats[$index]]">Check</span>
-						</a>
-						<a class="btn btn-primary btn-xs"  ng-click="raise($index)">Raise
-						</a>
-						<a class="btn btn-primary btn-xs"  ng-click="fold($index)">Fold
-						</a>
-					</span>
-				</h6>
-				<span ng-show="seat===false">Seat {{$index}}<br></span>
-				<a class="btn btn-primary btn-xs sCenter" ng-click="sitDown($index)" ng-show="!user.profile.sitting&&seat===false&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')">Sit Down</a>
-				
-				<a class="btn btn-primary btn-xs sCenter" ng-click="addPlayer($index)" ng-show="user.profile.sitting&&seat===false&&roomMaster===user.profile.username&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')">Add Player</a>
-			
-				<a class="btn btn-primary btn-xs sCenter" ng-click="removePlayer($index)" ng-show="user.profile.sitting&&seat!==false&&(table.game.actionOn===undefined || table.game.roundName==='Showdown')&&table.players[table.seats[$index]].user==='bot'&&roomMaster===user.profile.username">Remove Player</a>
-				<h6 ng-show="table.game.bets[table.seats[$index]]">
-					{{table.game.bets[table.seats[$index]]}}
-				</h6>
+					<div id="communnityCardDisp">
+						<img ng-show="table.game.board[0]" class='card' ng-src="images/PlayingCards/SVG/{{table.game.board[0]}}.svg" alt="{{table.game.board[0]}}">
+						<img class='card' ng-show="table.game.board[1]"ng-src="images/PlayingCards/SVG/{{table.game.board[1]}}.svg" alt="{{table.game.board[1]}}">
+						<img class='card' ng-show="table.game.board[2]"ng-src="images/PlayingCards/SVG/{{table.game.board[2]}}.svg" alt="{{table.game.board[2]}}">
+						<img class='card' ng-show="table.game.board[3]"ng-src="images/PlayingCards/SVG/{{table.game.board[3]}}.svg" alt="{{table.game.board[3]}}">
+						<img class='card' ng-show="table.game.board[4]"ng-src="images/PlayingCards/SVG/{{table.game.board[4]}}.svg" alt="{{table.game.board[4]}}">
+					</div>
 
-			</seat>
-		</li>
-		<li>
-			<br>
-			<br>
-			<br>
-			<br>
-			Pot: {{table.game.pot}}
-			<br>
-			<img ng-show="table.game.board[0]" class='card' ng-src="images/PlayingCards/SVG/{{table.game.board[0]}}.svg" alt="{{table.game.board[0]}}">
-			<img class='card' ng-show="table.game.board[1]"ng-src="images/PlayingCards/SVG/{{table.game.board[1]}}.svg" alt="{{table.game.board[1]}}">
-			<img class='card' ng-show="table.game.board[2]"ng-src="images/PlayingCards/SVG/{{table.game.board[2]}}.svg" alt="{{table.game.board[2]}}">
-			<img class='card' ng-show="table.game.board[3]"ng-src="images/PlayingCards/SVG/{{table.game.board[3]}}.svg" alt="{{table.game.board[3]}}">
-			<img class='card' ng-show="table.game.board[4]"ng-src="images/PlayingCards/SVG/{{table.game.board[4]}}.svg" alt="{{table.game.board[4]}}">
-			<br>
-			{{table.game.roundName}}
-			<br>
-			{{table.game.winners}}
-		</li>
+					<div class='example-chat l-demo-container' scroll-glue>
 
-	</ul>
-	</div>
+				      <ul id='example-messages' class='example-chat-messages' scroll-glue>
+				        <li ng-repeat='msg in messages'>
+				          <strong class='example-chat-username'>{{msg.from}}</strong>
+				          {{msg.body}}
+				        </li>
+				      </ul>
+
+				      <footer>
+				        <input ng-model='msg' ng-keydown="addMessage($event)" type='text' id='messageInput'  placeholder='Type a message...'>
+				      </footer>
+				    </div>
+
+			</div>
+
+		</div>
 	</div>
 	
 </div>
+

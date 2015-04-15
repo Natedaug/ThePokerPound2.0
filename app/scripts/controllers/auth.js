@@ -1,5 +1,6 @@
-app.controller("AuthCtrl", function($scope, Auth, $location, user) {
+app.controller("AuthCtrl", function($scope, Auth, $location) {
   // any time auth status updates, add the user data to scope
+  	var user = Auth.resolveUser();
   	if(user){
   		$location.path('/AngPoker');
   	}

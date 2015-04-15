@@ -157,36 +157,57 @@ Copyright (c) 2014 Daniel Eden
   0% {
     -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1);
+        -ms-transform: rotate(0deg) scale3d(1, 1, 1); /* IE 9 */
+    -webkit-transform: rotate(0deg) scale3d(1, 1, 1); /* Chrome, Safari, Opera */
+            transform: rotate(0deg) scale3d(1, 1, 1);
   }
 
   30% {
     -webkit-transform: scale3d(1.25, 0.75, 1);
             transform: scale3d(1.25, 0.75, 1);
+        -ms-transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1); /* IE 9 */
+    -webkit-transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1);
   }
 
   40% {
     -webkit-transform: scale3d(0.75, 1.25, 1);
             transform: scale3d(0.75, 1.25, 1);
+        -ms-transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1);; /* IE 9 */
+    -webkit-transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1);; /* Chrome, Safari, Opera */
+            transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1);;
   }
 
   50% {
     -webkit-transform: scale3d(1.15, 0.85, 1);
             transform: scale3d(1.15, 0.85, 1);
+        -ms-transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1); /* IE 9 */
+    -webkit-transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1);
   }
 
   65% {
     -webkit-transform: scale3d(.95, 1.05, 1);
             transform: scale3d(.95, 1.05, 1);
+        -ms-transform: rotate(-9.35deg) scale3d(.95, 1.05, 1);; /* IE 9 */
+    -webkit-transform: rotate(-9.35deg) scale3d(.95, 1.05, 1);; /* Chrome, Safari, Opera */
+            transform: rotate(-9.35deg) scale3d(.95, 1.05, 1);;
   }
 
   75% {
     -webkit-transform: scale3d(1.05, .95, 1);
             transform: scale3d(1.05, .95, 1);
+        -ms-transform: rotate(-11.05deg) scale3d(1.05, .95, 1); /* IE 9 */
+    -webkit-transform: rotate(-11.05deg) scale3d(1.05, .95, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-11.05deg) scale3d(1.05, .95, 1);
   }
 
   100% {
     -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1);
+        -ms-transform: rotate(-17deg) scale3d(1, 1, 1); /* IE 9 */
+    -webkit-transform: rotate(-17deg) scale3d(1, 1, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-17deg) scale3d(1, 1, 1);
   }
 }
 
@@ -194,36 +215,57 @@ Copyright (c) 2014 Daniel Eden
   0% {
     -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1);
+        -ms-transform: rotate(0deg) scale3d(1, 1, 1); /* IE 9 */
+    -webkit-transform: rotate(0deg) scale3d(1, 1, 1); /* Chrome, Safari, Opera */
+            transform: rotate(0deg) scale3d(1, 1, 1);
   }
 
   30% {
     -webkit-transform: scale3d(1.25, 0.75, 1);
             transform: scale3d(1.25, 0.75, 1);
+        -ms-transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1); /* IE 9 */
+    -webkit-transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-5.1deg) scale3d(1.25, 0.75, 1);
   }
 
   40% {
     -webkit-transform: scale3d(0.75, 1.25, 1);
             transform: scale3d(0.75, 1.25, 1);
+        -ms-transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1); /* IE 9 */
+    -webkit-transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-6.8deg) scale3d(0.75, 1.25, 1);
   }
 
   50% {
     -webkit-transform: scale3d(1.15, 0.85, 1);
             transform: scale3d(1.15, 0.85, 1);
+        -ms-transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1); /* IE 9 */
+    -webkit-transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-8.5deg) scale3d(1.15, 0.85, 1);
   }
 
   65% {
     -webkit-transform: scale3d(.95, 1.05, 1);
             transform: scale3d(.95, 1.05, 1);
+        -ms-transform: rotate(-9.35deg) scale3d(.95, 1.05, 1); /* IE 9 */
+    -webkit-transform: rotate(-9.35deg) scale3d(.95, 1.05, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-9.35deg) scale3d(.95, 1.05, 1);
   }
 
   75% {
     -webkit-transform: scale3d(1.05, .95, 1);
             transform: scale3d(1.05, .95, 1);
+        -ms-transform: rotate(-11.05deg) scale3d(.95, 1.05, 1); /* IE 9 */
+    -webkit-transform: rotate(-11.05deg) scale3d(.95, 1.05, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-11.05deg) scale3d(.95, 1.05, 1);
   }
 
   100% {
     -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1);
+        -ms-transform: rotate(-17deg) scale3d(1, 1, 1); /* IE 9 */
+    -webkit-transform: rotate(-17deg) scale3d(1, 1, 1); /* Chrome, Safari, Opera */
+            transform: rotate(-17deg) scale3d(1, 1, 1);
   }
 }
 

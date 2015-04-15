@@ -1,0 +1,18 @@
+
+<div class="leaderBoard">
+<div class="leaderBoardWrap">
+	<h4> &nbsp Leader Board</h4>
+	<table class="table table-border table-condensed">
+		<tbody>
+	        <tr ng-repeat="user in userList | orderBy:'-balance' " ng-click="showPopup(email)">
+	        	<td><div class="badge">{{$index + 1}}</div></td>
+	            <td>{{ user.username }}</td>
+	            <td>{{ user.balance }}</td>
+	            <td>{{ user.avatar }}</td>
+	        </tr>
+	        
+	    </tbody>
+	</table>
+
+</div>
+</div>

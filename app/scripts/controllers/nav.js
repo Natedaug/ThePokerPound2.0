@@ -3,6 +3,11 @@
 app.controller("NavAuthCtrl", function($scope, Auth, $location, $firebaseObject, FIREBASE_URL) {
   // any time auth status updates, add the user data to scope
 
+$scope.modalShown = false;
+$scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+};
+
 $scope.login = function () {
     Auth.login($scope.user).then(function () {
       $scope.email = Auth.resolveUser().password.email;

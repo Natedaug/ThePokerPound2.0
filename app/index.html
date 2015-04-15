@@ -14,7 +14,8 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/animate.css">
     <link rel="stylesheet" href="styles/main.css">
-     
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Average' rel='stylesheet' type='text/css'>
     <!-- endbuild -->
   </head>
   <body ng-app="thePokerPound20App">
@@ -23,34 +24,13 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" id="mainContain" ng-controller="NavAuthCtrl">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#/">Home</a></li>
-          <li><a ng-href="#/AngPoker">Poker</a></li>
-          <!--<li><a ng-href="#/NewPoker">NewPoker</a></li>
-          <li><a ng-href="#/AngPoker">AngPoker</a></li>-->
-          <li ng-show="signedIn()">
-            <a href="#" ng-click="logout()">Logout</a>
-          </li>
-          <li class = "navImage" ng-show="signedIn()">
-            <a ng-href="#/users/{{ user.profile.uid }}">
-              <img ng-src="images/half-size-{{ user.profile.avatar }}" class="nav-pic" />
-              {{ user.profile.username }}
-            </a>
-          </li>
-          
-          <li ng-hide="signedIn()">
-            <a href="#/register">Register/Login</a>
-          </li>
-        </ul>
-        <h3 class="text-muted">the PokerPound 2.0</h3>
-      </div>
+    
+      <div class="container" id="mainContain">
 
-      <div ng-view=""></div>
+        <div ng-view=""></div>
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Poker Pounding Corporation</p>
+        <p><span class="glyphicon glyphicon-copyright-mark"></span> The Poker Pounding Corporation</p>
       </div>
     </div>
 
@@ -88,6 +68,8 @@
     <script src="bower_components/chance/chance.js"></script>
     <script src="bower_components/firebase/firebase.js"></script>
     <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+    <script src="bower_components/angular-progress-arc/angular-progress-arc.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -102,7 +84,9 @@
         <script src="scripts/services/table.js"></script>
         <script src="scripts/controllers/nav.js"></script>
         <script src="scripts/directives/seatdir.js"></script>
-        
+        <script src="scripts/directives/modal.js"></script>
+        <script src="scripts/directives/emailBox.js"></script>
+        <script src="scripts/directives/leaderBoard.js"></script>
         <!-- endbuild -->
 </body>
 </html>

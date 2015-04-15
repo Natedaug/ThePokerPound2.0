@@ -17,7 +17,9 @@ var app = angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'luegg.directives',
+    'angular-progress-arc'
   ])
   .constant('FIREBASE_URL', 'https://pokerpound.firebaseio.com/')
   .config(function ($routeProvider) {

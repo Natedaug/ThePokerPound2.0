@@ -15,7 +15,7 @@ app.factory("Auth", function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootS
       createProfile: function (user){
         var profile = {
           username: user.username,
-          avatar: user.avatar,
+          avatar: 'assassin_avatar.png',
           balance: 1000,
           sitting: false,
           seat: -1

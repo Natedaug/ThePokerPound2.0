@@ -6,7 +6,8 @@ app.directive("seat", function (){
 		transclude: true,
 		scope: {
             index: '@',
-            length: '@'
+            length: '@',
+            wager: '@'
         },
 		link: function(scope, element, attrs) {
 	           
@@ -45,18 +46,10 @@ app.directive("seat", function (){
 	        	currAngle += (degreeAngle/4);
 	        }
 
-	        /* draw each circle at the specified angle */
-	        //for (var i = 0; i < noOfCircles; i++) {
-	            /* add to the wrapper */
-	            //wrapper.append(getDiv(currAngle,attrs.index));
-	            wrapper.css({
-	            	transform: "rotate(" + currAngle + "rad) translate("+getR(currAngle)+"em) rotate(" + -currAngle + "rad)"
-	            });
-	            /* increment the angle incrementer */
-	            //currAngle = currAngle - degreeAngle;
-	        //}
-
-	    
+	        wrapper.css({
+	            transform: "rotate(" + currAngle + "rad) translate("+getR(currAngle)+"em) rotate(" + -currAngle + "rad)"
+	        });
+	            	    
 		    /*
 		        Function returns a new DIV with the angles translation using CSS.
 		        It also applies a random color for fun.

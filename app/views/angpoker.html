@@ -1,12 +1,54 @@
 
 <div class="wrapperrooms">
-  <br/>
+
+  <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li>
+            <a ng-click="toggleLeaderBoardVisibility()">
+              <span class="glyphicon glyphicon-stats"></span>
+              <span class="badge">1{{user.profile.rank}}</span>
+            </a>
+          </li>
+          <li>
+            <a ng-click="toggleEmailVisibility()">
+              <span class="glyphicon glyphicon-envelope"></span>
+              <span class="badge">4</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              ${{ user.profile.balance }}
+            </a>
+          </li>
+          <li class = "navImage" ng-show="signedIn()">
+            <a>
+              <img ng-src="images/half-size-{{ user.profile.avatar }}" class="nav-pic" />
+              {{ user.profile.username }}
+            </a>
+          </li>
+          
+          <li ng-show="signedIn()">
+            <a ng-href="#/">
+              <div class="btn logOutButton" ng-click="logout()">Logout</div>
+            </a>
+          </li>
+
+        </ul>
+        
+        <h3 class="text-muted">the PokerPound 2.0</h3>
+  </div>
+<!---ng-show="isEmailVisible"-->
+<email-box show='isEmailVisible'></email-box>
+<leader-board show='isLeaderBoardVisible'></leader-board>
+<hr>
+
   <h3 class="room-head">Poker Rooms
     <a href="javascript:" class="btn btn-xs btn-primary" ng-hide="isNew == true" ng-click="isNew = true; roomName = ''; ">New Room</a>
     <input ng-show="isNew == true" class="input-sm form-control cust-text" type="text" ng-model="roomName" placeholder="Room Name" />
+    <!--<div class="newRoomForm">
+    </div>-->
     <a href="javascript:" ng-disabled="!roomName" ng-show="isNew == true" class="btn btn-xs btn-info" ng-click="newRoom()">Create</a>
   </h3>
- 
   <input type="text" class="form-control" placeholder="Search Rooms" ng-model="search">
   <div class="rooms">
     <div ng-repeat="item in rooms | filter:search" class="room">
@@ -21,4 +63,5 @@
       <h3>No Rooms Available. Create your own!</h3>
     </div>
   </div>
+  
 </div>

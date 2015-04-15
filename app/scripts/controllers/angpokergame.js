@@ -5,13 +5,31 @@ app.controller('AngPokerController',
       var ref = new Firebase(FIREBASE_URL+"/pokerrooms");
       var ref2 = new Firebase(FIREBASE_URL);
       $scope.rooms = $firebaseArray(ref);
+      $scope.isEmailVisible = false;
+      $scope.isLeaderBoardVisible = false;
+
  	  //this.user = Auth.user;
 
  	  if(!user){
-  		$location.path('/register');
+  		$location.path('/');
   	  } else {
   	  	$scope.user = user;
   	  	$scope.user.profile = $firebaseObject(ref2.child('profile').child(user.uid));
+  	  }
+  	  
+  	  //do email and leaderboar loading in this controller and pass the info to directives
+
+  	  $scope.toggleEmailVisibility = function() {
+  	  	$scope.isEmailVisible = !$scope.isEmailVisible;
+  	  	if($scope.isLeaderBoardVisible){
+  	  		$scope.isLeaderBoardVisible = !$scope.isLeaderBoardVisible;
+  	  	}
+  	  }
+  	  $scope.toggleLeaderBoardVisibility = function() {
+  	  	$scope.isLeaderBoardVisible = !$scope.isLeaderBoardVisible;
+  	  	if($scope.isEmailVisible){
+  	  		$scope.isEmailVisible = !$scope.isEmailVisible;
+  	  	}
   	  }
 
 	  $scope.newRoom = function() {
@@ -38,6 +56,7 @@ app.controller('AngPokerController',
 	    $location.path('/pokerroom/' + $scope.rooms[room].$id);
 	  };
 
+	  $scope.signedIn = Auth.signedIn;
 	  $scope.logout = Auth.logout; 
  	}
   );
