@@ -7,7 +7,7 @@ app.directive('leaderBoard', function($firebaseArray, FIREBASE_URL) {
 		scope: {
       		show: '='
     	}, 
-		link: function($scope, $element, $attrs, $parse) {
+		link: function($scope) {
 			var ref = new Firebase(FIREBASE_URL+'/profile/');
 			$scope.userList = $firebaseArray(ref);
 

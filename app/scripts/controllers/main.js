@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the thePokerPound20App
  */
-app.controller('MainCtrl', function ($scope, Auth, FIREBASE_URL,$firebaseObject) {
+app.controller('MainCtrl', function ($scope, Auth, FIREBASE_URL,$firebaseObject, $location) {
 	$scope.toggleModal = function() {
 	    $scope.modalShown = !$scope.modalShown;
 	};
@@ -48,7 +48,7 @@ app.controller('MainCtrl', function ($scope, Auth, FIREBASE_URL,$firebaseObject)
 
 
 	$scope.usercheck = Auth.checkUser();
-	$scope.usercheck.$onAuth(function(authData){
+	$scope.usercheck.$onAuth(function(){
 	  $scope.user = Auth.resolveUser();
-	})
+	});
 });

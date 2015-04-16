@@ -1,8 +1,8 @@
 'use strict';
 
-app.directive("seat", function (){
+app.directive('seat', function (){
 	return{
-		restrict: "E",
+		restrict: 'E',
 		transclude: true,
 		scope: {
             index: '@',
@@ -20,53 +20,54 @@ app.directive("seat", function (){
 	        
 	        /* initialize angle incrementer variable */
 	        var currAngle = degreeAngle*attrs.index;
+
+	        function getR(currAngle){
+		    	var r = ( (25*12.5) / Math.sqrt( (Math.pow(25,2) * Math.pow(Math.sin(currAngle),2)) + (Math.pow(12.5,2) * Math.pow(Math.cos(currAngle),2)) ) );
+		    	
+		    	return r;
+		    }
+		    
 	        //adjust for even distribution around perimeter
-	        if(attrs.index==1){
+	        if(attrs.index===1){
 	        	//currAngle -= (degreeAngle);
 	        }
-	        else if(attrs.index==2){
+	        else if(attrs.index===2){
 	        	currAngle -= (degreeAngle/22);
 	        }
-	        else if(attrs.index==3){
+	        else if(attrs.index===3){
 	        	currAngle += (currAngle/10);
 	        }
-	        else if(attrs.index==4){
+	        else if(attrs.index===4){
 	        	currAngle += (degreeAngle/4);
 	        }
-	        else if(attrs.index==6){
+	        else if(attrs.index===6){
 	        	currAngle -= (degreeAngle/3);
 	        }
-	        else if(attrs.index==7){
+	        else if(attrs.index===7){
 	        	currAngle -= (degreeAngle/4);
 	        }
-	        else if(attrs.index==8){
+	        else if(attrs.index===8){
 	        	currAngle += (degreeAngle/5);
 	        }
-	        else if(attrs.index==9){
+	        else if(attrs.index===9){
 	        	currAngle += (degreeAngle/4);
 	        }
 
 	        wrapper.css({
-	            transform: "rotate(" + currAngle + "rad) translate("+getR(currAngle)+"em) rotate(" + -currAngle + "rad)"
+	            transform: 'rotate(' + currAngle + 'rad) translate('+getR(currAngle)+'em) rotate(' + -currAngle + 'rad)'
 	        });
 	            	    
 		    /*
 		        Function returns a new DIV with the angles translation using CSS.
 		        It also applies a random color for fun.
 		        stole the CSS from :http://stackoverflow.com/questions/12813573/position-icons-into-circle
-		    */
+		    
 		    function getDiv(currAngle,i) {
-		        return "<div class='seat' id='seat"+i+"' style='transform: rotate(" + currAngle + "rad) translate("+getR(currAngle)+"em) rotate(" + -currAngle + "rad);' >"+"<div> Seat "+(i+1)+" </div><button class='btn btn-small'>sit</button></div>"
+		        return '<div class="seat" id="seat'+i+'" style="transform: rotate(' + currAngle + 'rad) translate('+getR(currAngle)+'em) rotate(' + -currAngle + 'rad);" >'+'<div> Seat '+(i+1)+' </div><button class="btn btn-small">sit</button></div>';
 
 		    }
-
-		    function getR(currAngle){
-		    	var r = ( (25*12.5) / Math.sqrt( (Math.pow(25,2) * Math.pow(Math.sin(currAngle),2)) + (Math.pow(12.5,2) * Math.pow(Math.cos(currAngle),2)) ) );
-		    	
-		    	return r;
-		    }
-	 
+		    */
 	      
 		}
-	}
+	};
 });

@@ -1,12 +1,12 @@
 'use strict';
 
-app.factory("Auth", function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootScope) {
+app.factory('Auth', function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootScope) {
   var ref = new Firebase(FIREBASE_URL);
   var auth = $firebaseAuth(ref);
 
   var Auth = {
       register: function (user) {
-        user.email = user.username + "@" + user.username+".com";
+        user.email = user.username + '@' + user.username+'.com';
         return auth.$createUser({
         	email : user.email, 
         	password : user.password
@@ -19,9 +19,9 @@ app.factory("Auth", function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootS
           balance: 1000,
           sitting: false,
           seat: -1
-        }
+        };
 
-        var profileRef = new Firebase(FIREBASE_URL+"/profile/"+user.uid);
+        var profileRef = new Firebase(FIREBASE_URL+'/profile/'+user.uid);
         return profileRef.set(profile);
       },
       signedIn: function () {
@@ -33,12 +33,12 @@ app.factory("Auth", function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootS
         }
       },
       login: function (user) {
-        user.email = user.username + "@" + user.username+".com";
+        user.email = user.username + '@' + user.username+'.com';
         return auth.$authWithPassword({
         	email : user.email, 
         	password : user.password,
-        }, function(error, authData){
-            remember: "sessionOnly"
+        }, function(){},{
+            remember: 'sessionOnly'
           }).then(function(authData){
             $rootScope.$broadcast('$firebaseAuth:authWithPassword',authData);
             return authData;

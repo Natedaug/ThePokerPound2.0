@@ -7,7 +7,7 @@ app.directive('emailBox', function() {
 		scope: {
       		show: '='
     	}, 
-		link: function($scope, $element, $attrs, $parse) {
+		link: function($scope) {
       		$scope.emails = [
 			    { 
 			        from: 'John',
@@ -46,7 +46,7 @@ app.directive('emailBox', function() {
 			    }
 
 			];
-    		//$scope.show=$attrs.show;
+    		
     		$scope.$watch('show', function(newValue, oldValue) {
     			if(newValue!==oldValue){
     				if(newValue){
@@ -57,7 +57,7 @@ app.directive('emailBox', function() {
     			}
     		});
 			
-			//if(!$attrs.show){$($element).slideToggle()};
+			
 
 	    	$scope.isPopupVisible = false;
 
@@ -83,12 +83,12 @@ app.directive('emailBox', function() {
 
 			$scope.sendEmail = function() {
 			    $scope.isComposePopupVisible = false;
-			    $scope.composeEmail.from = "me";
+			    $scope.composeEmail.from = 'me';
 			    $scope.composeEmail.date = new Date();
 			    $scope.sentEmails.splice(0,0,$scope.composeEmail);
 			};
 
-			$scope.activeTab = "inbox";
+			$scope.activeTab = 'inbox';
 
 			$scope.sentEmails = [];
 
@@ -100,18 +100,18 @@ app.directive('emailBox', function() {
 				angular.copy($scope.selectedEmail, $scope.composeEmail);
 
 				$scope.composeEmail.body = 
-		        "\n-------------------------------\n" 
-		        + "from: " + $scope.composeEmail.from + "\n"
-		        + "sent: " + $scope.composeEmail.date + "\n"
-		        + "to: " + $scope.composeEmail.to + "\n"
-		        + "subject: " + $scope.composeEmail.subject + "\n"
-		        + $scope.composeEmail.body;
+		        '\n-------------------------------\n' + 
+		        'from: ' + $scope.composeEmail.from + '\n' + 
+		        'sent: ' + $scope.composeEmail.date + '\n' +
+		        'to: ' + $scope.composeEmail.to + '\n' + 
+		        'subject: ' + $scope.composeEmail.subject + '\n' + 
+		        $scope.composeEmail.body;
 
-		        $scope.composeEmail.subject = "FW: " + $scope.composeEmail.subject;
+		        $scope.composeEmail.subject = 'FW: ' + $scope.composeEmail.subject;
 
-		        $scope.composeEmail.to = "";
+		        $scope.composeEmail.to = '';
 
-		        $scope.composeEmail.from = "me";
+		        $scope.composeEmail.from = 'me';
 
 				$scope.isComposePopupVisible = true;
 			};
@@ -124,18 +124,18 @@ app.directive('emailBox', function() {
 				angular.copy($scope.selectedEmail, $scope.composeEmail);
 
 				$scope.composeEmail.body = 
-		        "\n-------------------------------\n" 
-		        + "from: " + $scope.composeEmail.from + "\n"
-		        + "sent: " + $scope.composeEmail.date + "\n"
-		        + "to: " + $scope.composeEmail.to + "\n"
-		        + "subject: " + $scope.composeEmail.subject + "\n"
-		        + $scope.composeEmail.body;
+		        '\n-------------------------------\n' + 
+		        'from: ' + $scope.composeEmail.from + '\n' + 
+		        'sent: ' + $scope.composeEmail.date + '\n' + 
+		        'to: ' + $scope.composeEmail.to + '\n' + 
+		        'subject: ' + $scope.composeEmail.subject + '\n' + 
+		        $scope.composeEmail.body;
 
-		        $scope.composeEmail.subject = "RE: " + $scope.composeEmail.subject;
+		        $scope.composeEmail.subject = 'RE: ' + $scope.composeEmail.subject;
 
 		        $scope.composeEmail.to = $scope.composeEmail.from;
 
-		        $scope.composeEmail.from = "me";
+		        $scope.composeEmail.from = 'me';
 
 				$scope.isComposePopupVisible = true;
 			};

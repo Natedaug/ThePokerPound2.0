@@ -1,8 +1,8 @@
 'use strict';
 
 app.controller('AngPokerController', 
-	function($firebaseArray, $firebaseObject,$location,FIREBASE_URL,$scope,Auth,user,Table) {
-      var ref = new Firebase(FIREBASE_URL+"/pokerrooms");
+	function($firebaseArray, $firebaseObject,$location,FIREBASE_URL,$scope,Auth,user) {
+      var ref = new Firebase(FIREBASE_URL+'/pokerrooms');
       var ref2 = new Firebase(FIREBASE_URL);
       $scope.rooms = $firebaseArray(ref);
       $scope.isEmailVisible = false;
@@ -24,13 +24,13 @@ app.controller('AngPokerController',
   	  	if($scope.isLeaderBoardVisible){
   	  		$scope.isLeaderBoardVisible = !$scope.isLeaderBoardVisible;
   	  	}
-  	  }
+  	  };
   	  $scope.toggleLeaderBoardVisibility = function() {
   	  	$scope.isLeaderBoardVisible = !$scope.isLeaderBoardVisible;
   	  	if($scope.isEmailVisible){
   	  		$scope.isEmailVisible = !$scope.isEmailVisible;
   	  	}
-  	  }
+  	  };
 
 	  $scope.newRoom = function() {
 	    ref.push({
@@ -45,9 +45,9 @@ app.controller('AngPokerController',
 	  $scope.deleteRoom = function(room) {
 	    ref.child($scope.rooms[room].$id).remove(function(error) {
 	      if (error) {
-	        console.log("Error:", error);
+	        console.log('Error:', error);
 	      } else {
-	        console.log("Profile removed successfully!");
+	        console.log('Profile removed successfully!');
 	      }
 	    });
 	  };
