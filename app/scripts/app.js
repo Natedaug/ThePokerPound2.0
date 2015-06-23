@@ -19,7 +19,8 @@ var app = angular
     'ngSanitize',
     'ngTouch',
     'luegg.directives',
-    'angular-progress-arc'
+    'angular-progress-arc',
+    'angucomplete-alt'
   ])
   .constant('FIREBASE_URL', 'https://pokerpound.firebaseio.com/')
   .config(function ($routeProvider) {
@@ -71,5 +72,6 @@ var app = angular
       if (error === 'AUTH_REQUIRED') {
         $location.path('/register');
       }
+      
     });
 }]);

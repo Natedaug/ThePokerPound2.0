@@ -21,6 +21,7 @@ app.controller('AuthCtrl', function($scope, Auth, $location) {
 			return Auth.login($scope.user).then(function(user) {
 				user.username = $scope.user.username;
 				user.avatar = $scope.user.avatar;
+				
 				return Auth.createProfile(user);
 			}).then(function() {
 				$location.path('/AngPoker');

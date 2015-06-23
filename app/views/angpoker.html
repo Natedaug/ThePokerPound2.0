@@ -1,22 +1,22 @@
 
-<div class="wrapperrooms">
+<div class="wrapperrooms" ng-cloak>
 
   <div class="header">
         <ul class="nav nav-pills pull-right">
           <li>
             <a ng-click="toggleLeaderBoardVisibility()">
               <span class="glyphicon glyphicon-stats"></span>
-              <span class="badge">1{{user.profile.rank}}</span>
+              <span class="badge">{{ userRank }}</span>
             </a>
           </li>
           <li>
-            <a ng-click="toggleEmailVisibility()">
+            <a ng-click="toggleEmailVisibility()" ng-class="{unreadEmail: unread>0}">
               <span class="glyphicon glyphicon-envelope"></span>
-              <span class="badge">4</span>
+              <span class="badge" ng-class="{unreadEmailBadge: unread>0}">{{unread}}</span>
             </a>
           </li>
           <li>
-            <a>
+            <a class="balanceHome">
               ${{ user.profile.balance }}
             </a>
           </li>
@@ -28,34 +28,42 @@
           </li>
           
           <li ng-show="signedIn()">
-            <a ng-href="#/">
-              <div class="btn logOutButton" ng-click="logout()">Logout</div>
+            <a class="settingsHome dropdown">
+              <!--<div class="btn logOutButton" ng-click="logout()">Logout</div>   ng-href="#/"-->
+              <span class="glyphicon glyphicon-cog rotate dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"></span>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                  <li ng-click="showEditProfile()">Edit Profile</li>
+                  <li ng-click="refillBalance()">Refill Money</li>
+                  <li ng-click="logout()">Logout</li>
+                </ul>
             </a>
           </li>
-
         </ul>
         
         <h3 class="text-muted">the PokerPound 2.0</h3>
   </div>
 <!---ng-show="isEmailVisible"-->
-<email-box show='isEmailVisible'></email-box>
-<leader-board show='isLeaderBoardVisible'></leader-board>
+<email-box show='isEmailVisible' user='user' bind='unread'></email-box>
+<leader-board show='isLeaderBoardVisible' username='user.profile.username' bind='userRank'></leader-board>
 <hr>
-
   <h3 class="room-head">Poker Rooms
-    <a href="javascript:" class="btn btn-xs btn-primary" ng-hide="isNew == true" ng-click="isNew = true; roomName = ''; ">New Room</a>
-    <input ng-show="isNew == true" class="input-sm form-control cust-text" type="text" ng-model="roomName" placeholder="Room Name" />
-    <!--<div class="newRoomForm">
-    </div>-->
-    <a href="javascript:" ng-disabled="!roomName" ng-show="isNew == true" class="btn btn-xs btn-info" ng-click="newRoom()">Create</a>
+    <a href="javascript:" class="btn btn-xs btn-primary" ng-hide="isNew" ng-click="isNew = true; roomName = ''; ">New Room</a>
+    <input class="input-sm form-control cust-text" type="text" ng-show="isNew" ng-model="roomName" placeholder="Room Name" />
+    <a href="javascript:" class="btn btn-xs btn-danger" ng-show="isNew" ng-click="isNew = false; roomName = ''; ">Cancel</a>
+    <a href="javascript:" ng-disabled="!roomName" ng-show="isNew" class="btn btn-xs btn-info" ng-click="newRoom()">Create</a>
   </h3>
+
+  <new-room-form show='isNew' bind="roomForm" ></new-room-form>
+  
   <input type="text" class="form-control" placeholder="Search Rooms" ng-model="search">
-  <div class="rooms">
+  <div class="rooms" ng-cloak>
     <div ng-repeat="item in rooms | filter:search" class="room">
       <h4>{{item.roomname}}</h4>
-      <h6> <em> by : {{item.createdBy}} </em></h6>
+      <h5 class="text-muted"> {{item.gameType}}: {{item.blindLevel}} {{item.buyIn | currency:undefined:0}} &nbsp;&nbsp;Players: {{item.players}}/{{item.maxPlayers}}</h5>
+
       <a class="btn btn-primary btn-xs pull-right join-room" href="javascript:" ng-click="joinRoom($index)">Join</a>
       <a class="btn btn-danger btn-xs pull-right" ng-click="deleteRoom($index)" ng-show="user.profile.username === item.createdBy">Delete</a>
+      <em class = "pull-right"> by : {{item.createdBy}} </em>
  	  <div style="clear: both;"></div>
     </div>
 
@@ -64,4 +72,23 @@
     </div>
   </div>
   
+  <modal-dialog show='isEditProfileVisible' width='650px' >
+      <h3>{{ user.profile.username }}</h3>
+   
+      <div class="modal-body">
+          <div ng-init="user.avatar='assassin_avatar.png'">
+            <input type="radio" ng-model="user.profile.avatar" name="avatar" value="assassin_avatar.png"/> <img src="images/assassin_avatar.png" alt="Assasin Avatar">
+
+            <input type="radio" ng-model="user.profile.avatar" name="avatar" value="dad_avatar.png"/> <img src="images/dad_avatar.png" alt="Dad Avatar">
+          
+            <input type="radio" ng-model="user.profile.avatar" name="avatar" value="v_avatar.png"/> <img src="images/v_avatar.png" alt="V Avatar">
+            
+            <input type="radio" ng-model="user.profile.avatar" name="avatar" value="soldier_avatar.png"/> <img src="images/soldier_avatar.png" alt="Soldier Avatar">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" ng-click="closeEditProfile()">Close</a>
+      </div>
+  </modal-dialog>
+
 </div>

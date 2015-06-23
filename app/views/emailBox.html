@@ -20,10 +20,12 @@
 	
 	<table ng-show="activeTab=='inbox'" class="table table-border table-condensed">
 		<tbody>
-	        <tr ng-repeat="email in emails" ng-click="showPopup(email)">
-	            <td>{{ email.from }}</td>
-	            <td>{{ email.subject }}</td>
-	            <td>{{ email.date | date:'MMM d'}}</td>
+	        <tr ng-repeat="email in emails.slice().reverse()" class="repeated-item">
+	        	<td  ng-click="showPopup(email)"><span class="glyphicon glyphicon-envelope" ng-class="{unreadEmail: !email.read}"></span></td>
+	            <td  ng-click="showPopup(email)">{{ email.from }}</td>
+	            <td  ng-click="showPopup(email)">{{ email.subject }}</td>
+	            <td  ng-click="showPopup(email)">{{ email.date }}</td>
+	            <td ><span ng-click="deleteEmail(email)" class="glyphicon glyphicon-remove" ng-class="{deleteEmail: email.confirm}" title="delete"></span></td>
 	        </tr>
 	        
 	    </tbody>
@@ -31,20 +33,22 @@
 
 	<table ng-show="activeTab=='sent'" class="table table-border table-condensed">
 		<tbody>
-	        <tr ng-repeat="email in sentEmails" ng-click="showPopup(email)">
-	            <td>{{ email.to }}</td>
-	            <td>{{ email.subject }}</td>
-	            <td>{{ email.date | date:'MMM d'}}</td>
+	        <tr ng-repeat="email in sentEmails.slice().reverse()" class="repeated-item">
+	        	<td><span class="glyphicon glyphicon-envelope" ></span></td>
+	            <td ng-click="showPopup(email)">{{ email.to }}</td>
+	            <td ng-click="showPopup(email)">{{ email.subject }}</td>
+	            <td ng-click="showPopup(email)">{{ email.date }}</td>
+	            <td ><span ng-click="deleteSentEmail(email)" class="glyphicon glyphicon-remove" ng-class="{deleteEmail: email.confirm}" title="delete"></span></td>
 	        </tr>	        
 	    </tbody>
 	</table>
 
-	<modal-dialog show='isPopupVisible' width='750px' height='250px'>
+	<modal-dialog show='isPopupVisible' width='750px' max-height='420px'>
 	    <h3>{{ selectedEmail.subject }}</h3>
 	 
 	    <div class="modal-body">
 	        <strong>From:</strong> {{selectedEmail.from}} <br />
-	        <strong>Date:</strong> {{selectedEmail.date | date:'MMM d'}} <br />
+	        <strong>Date:</strong> {{selectedEmail.date}} <br />
 	        <br />
 	        <p>
 	            <span style="white-space:pre">{{ selectedEmail.body }}</span>
@@ -57,19 +61,40 @@
 	    </div>
 	</modal-dialog>
 
-	<modal-dialog show='isComposePopupVisible' width='750px' height='420px'>
+	<modal-dialog show='isComposePopupVisible' width='750px' max-height='420px'>
 	    <h3>Compose Pmail</h3>
 	    
 	    <div class="modal-body">
-	        <form>
-	            <input type="text" placeholder="To" ng-model="composeEmail.to" style="width:95%;"><br/>
-	            <input type="text" placeholder="Subject" ng-model="composeEmail.subject" style="width:95%;"><br />
-	            <textarea style="width:95%;" rows="10" ng-model="composeEmail.body"></textarea>
+
+	        <form>   
+		        <div>
+			        <angucomplete-alt id="ex1"
+			              placeholder="To"
+			              pause="300"
+			              selected-object="selectedPerson"
+			              local-data="people"
+			              search-fields="username"
+			              title-field="username"
+			              minlength="1"
+			              input-class="form-control form-control-small"
+			              match-class="highlight"
+			              auto-match="true"
+			              initialValue="{{composeEmail.to}}"
+			              />
+		         </div>
+	         	 <div class="result">
+		          <div class="" ng-show="false">
+		            You selected <span class="bold-span">{{composeEmail.to = selectedPerson.originalObject.username}} </span>
+		          </div>
+		        </div>
+		        <br />
+	            <input class="form-control" type="text" placeholder="Subject" ng-model="composeEmail.subject"><br />
+	            <textarea class="form-control" rows="10" ng-model="composeEmail.body"></textarea>
 	        </form>
 	    </div>
 	    <div class="modal-footer">
 	        <a class="btn" ng-click="closeComposePopup()">Close</a>
-	        <a class="btn btn-primary" ng-click="sendEmail()">Send</a>
+	        <a class="btn btn-primary" ng-click="sendEmail()" ng-disabled="!selectedPerson.originalObject">Send</a>
 	    </div>
 	</modal-dialog>
 </div>

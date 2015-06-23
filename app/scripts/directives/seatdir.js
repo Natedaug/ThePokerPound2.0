@@ -24,7 +24,7 @@ app.directive('seat', function (){
 	        function getR(currAngle){
 		    	var r = ( (25*12.5) / Math.sqrt( (Math.pow(25,2) * Math.pow(Math.sin(currAngle),2)) + (Math.pow(12.5,2) * Math.pow(Math.cos(currAngle),2)) ) );
 		    	
-		    	return r;
+		    	return r+2;
 		    }
 		    
 	        //adjust for even distribution around perimeter

@@ -16,7 +16,9 @@ body {
   height: 200px;
   float:right;
 }**/
-
+#mainContain{
+  min-height: 572px;
+}
 h1,h2,h3{
   font-family: 'Fjalla One', sans-serif;
   text-shadow: -.5px -1px rgba(119, 119, 119, 0.69);
@@ -30,12 +32,53 @@ h1,h2,h3,h4,h5,h6{
 a{
   cursor:pointer;
 }
+.proom{
+  display: none;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.ng-hide-add, .ng-hide-remove {
+    /* ensure visibility during the transition */
+    display: inline-block !important; /* yes, important */
+}
+div.ng-enter-active,
+div.ng-hide-remove,div.ng-enter {
+  animation: fadeIn .5s;
+}
+div.ng-hide-add, div.ng-leave {
+  animation: fadeOut .5s;
+}
+.mainPage.ng-hide-remove{
+  animation: fadeIn .5s;
+}
+
 .leaderBoard h4,
 .emailBox h4{
   text-shadow: -.5px -1px rgba(119, 119, 119, 0.69);
 }
+.unreadEmail{
+  color: #337ab7 !important;
+}
+.unreadEmailBadge{
+  background: #337ab7;
+}
+.deleteEmail{
+  color: #d9534f;
+  text-shadow: 0 -1px #d43f3a;
+}
+.glyphicon {
+  text-shadow: -.5px -1px rgba(119, 119, 119, 0.69);
+}
+/*
+.repeated-item.ng-enter{
+  animation: flipInX 1s;
+}
+.repeated-item.ng-leave{
+  animation: flipOutX 1s;
+}*/
 .text-muted{
-  text-shadow: 0 -1px rgba(0,0,0,0.69);
+  text-shadow: -.5px -1px rgba(0,0,0,0.69);
 }
 .leaderBoard,
 .emailBox{
@@ -54,6 +97,14 @@ a{
   background: #fff;
   overflow: auto;
   margin: 0;
+}
+.userLeader{
+  background: #F9F9F9;
+  font-weight: 900;
+  color: black;
+}
+.userLeaderBadge{
+  background: black;
 }
 .leaderBoard table tbody tr td:first-child,
 .emailBox table tbody tr td:first-child{
@@ -84,6 +135,9 @@ a{
 email-box{
   width: 100%;
 }
+.nav > li > a{
+  font-size: 1.25em;
+}
 .navImage a{
   padding: 0px 5px 0px 0px !important;
   margin-top: 12px;
@@ -91,7 +145,7 @@ email-box{
   text-shadow: 0 -1px rgba(119, 119, 119, 0.69);
   color: #000 !important;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1.5em !important;
 }
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
@@ -99,9 +153,34 @@ email-box{
   box-shadow: inset 1px 2px 5px rgba(239, 239, 239, 0.690196078431);
   border: 1px solid #777;
 }
+.settingsHome:hover, .settingsHome:focus,
+.balanceHome:hover, .balanceHome:focus,
 .navImage > a:hover, .navImage > a:focus{
   box-shadow: inset 0px 0px 0px rgba(239, 239, 239, 0.690196078431) !important;
   border: 1px solid #D0DCDC !important;
+  background: #D0D9D9 !important;
+  cursor: default !important;
+}
+.settingsHome > span:hover, .settingsHome > span:focus{
+  font-weight: 900;
+  color: #333;
+  cursor: pointer !important;
+}
+.moneyText,
+.balanceHome{ 
+  color: #216C2A !important;
+  text-shadow: 0 .5px rgba(0,0,0,0.69);
+  margin-bottom: 15px !important;
+}
+.lobbyBtn{
+  text-decoration: none;
+  background-color: #D0D9D9;
+  box-shadow: inset 1px 2px 5px rgba(239, 239, 239, 0.690196078431);
+  border: 1px solid #777 !important;
+  text-shadow: 0 -1px rgba(119, 119, 119, 0.69);
+  color: #000 !important;
+  font-weight: bold;
+  font-size: 1.25em !important;
 }
 .emailBox .nav > li > a:hover, .emailBox .nav > li > a:focus {
   text-decoration: none;
@@ -109,6 +188,7 @@ email-box{
   box-shadow: inset 1px 2px 5px rgba(239, 239, 239, 0.690196078431);
   border: 1px solid #D0D9D9;
 }
+
 .nav > li > a:active, .nav > li > a:active {
   box-shadow: inset 1px 1px #D0DCDC;
 
@@ -118,8 +198,37 @@ email-box{
   border-bottom: 1px solid #ddd;
   background-color: #fff;
 }
-.emailBow .nav-tabs {
+.emailBox .nav-tabs {
   border-bottom: 0px solid #ddd; 
+}
+.dropdown-menu{
+  text-shadow: 0 -.5px rgba(0,0,0,0.69);
+  min-width: 100px;
+  cursor: pointer !important;
+  text-align: center;
+}
+.dropdown-menu>li{
+  padding: 4px 0px;
+}
+.dropdown-menu>li:focus, .dropdown-menu>li:hover {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+.newRoomOptions{
+  display: none;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.newRoomOptions > li{
+  list-style: none;
+  display: inline-block;
+}
+.newRoomOptions.ng-hide-remove{
+  animation: slideInDown .5s;
+}
+.newRoomOptions.ng-hide-add{
+  animation: slideOutUp .5s;
 }
 /**email-box.ng-hide-remove {
   animation: fadeIn .5s;
@@ -228,7 +337,9 @@ background-color: #777;
   font-size: 21px;
   padding: 14px 24px;
 }
-
+.mainPage img{
+  border-radius: 6px;
+}
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
@@ -262,22 +373,21 @@ background-color: #777;
 .tableBody{
   text-align: center;
   width: 500px;
-  height: 500px;
+  height: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 0;
 }
 .tableBody > h1{
   text-align: center;
 }
-
-.pokertable{
-  display:inline-block;
-  width: 34em;
-  height: 17em;
-  text-align: center;
+.tableDisp{
+  z-index: 1;
   position: relative;
- 
   
-  transform: translateY(-50%);
+  width: 34em;
+  height: 7.5em; /*was 17*/
+  text-align: center;
 
   border-radius: 50%;
   background: rgba(98,125,77,1);
@@ -289,9 +399,15 @@ background-color: #777;
   background: radial-gradient(ellipse at center, rgba(98,125,77,1) 0%, rgba(31,59,8,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', endColorstr='#1f3b08', GradientType=1 );
   
-  border: 10px ridge #00018F;
+  border: 5px ridge #00018F;
   box-shadow: inset 0 1px rgba(0,0,0,0.12), 3px 3px 7px #000000;
-  top: 50%;
+}
+.pokertable{
+  display:inline-block;
+  
+  position: relative;
+
+  top: 35%;
   
   color: red;
 
@@ -322,6 +438,7 @@ background-color: #777;
     color: #333;
     -webkit-transition:all linear 0.5s;
     transition:all linear 0.5s;
+    z-index: 100;
 }
 
 .occupied{
@@ -409,6 +526,7 @@ background-color: #777;
   left: 0px;
   width: 96.5px;
   text-align: center;
+  z-index: -90;
 }
 .badge{
   padding: 1px 6px 0px;
@@ -433,12 +551,12 @@ background-color: #777;
 #communnityCardDisp{
   position: absolute;
   text-align: center;
-  bottom: 135px;
+  bottom: 30px;
   width: 100%;
 }
 #potDisp{
   position: absolute;
-  bottom: 10px;
+  bottom: 3px;
   width: 100%;
 }
 #potDisp>span{
@@ -451,20 +569,22 @@ background-color: #777;
 #startGameButt,
 #newGameButt{
   position: absolute;
-  bottom: 10px;
-  left: 190px;
+  bottom: 38px;
+  left: 195px;
   padding: 3px 7px;
+  z-index: 10;
 }
 .dealerButt{
   position: absolute;
   bottom: -25px;
+  left: 0px;
   width: 100%;
   text-align: center;
 }
 .dealerButt>.badge{
   background: blue;
-  opacity: 0.7;
 }
+.actionDescription,
 .folded{
   display: inline-block;
   position: absolute;
@@ -472,10 +592,19 @@ background-color: #777;
   top: 25px;
   font-size: 1.5em;
   text-shadow: 0 1px rgba(0,0,0,0.69);
+  z-index: 101;
+}
+.folded{
   -ms-transform: rotate(-17deg); /* IE 9 */
   -webkit-transform: rotate(-17deg); /* Chrome, Safari, Opera */
   transform: rotate(-17deg);
-  z-index: 101;
+}
+.actionDescription{
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(211, 214, 214, .5);
+
 }
 .folded.ng-hide-remove{
   animation: rubberBand .8s;
@@ -496,6 +625,9 @@ background-color: #777;
 .actionButs .btn:active{
   box-shadow: inset 0 1px rgba(0,0,0,0.05), 5px 5px 5px #000000;
 }
+.buyInModal{
+  z-index: 200;
+}
 circle {
   stroke: #1E7DC8;
   stroke-linecap: round;
@@ -514,16 +646,24 @@ progress-arc{
 }*/
  /*choose room style*/
 .room-head {
+  position: relative;
   margin-top: -35px;
   border-bottom: 2px solid #CCC;
   padding: 20px 20px 8px;
   font-family: 'Average', serif;
+  z-index: 0;
 }
-.room h4, .room h6{
+.room h4, .room h5{
   display: inline-block;
+  text-shadow: 0px -.5px rgba(119, 119, 119, 0.69);
   margin: .25em;
 }
- 
+.room h4{
+  text-shadow: -.5px -1px rgba(119, 119, 119, 0.69);
+}
+.room em{
+  margin-right: 10px;
+}
 .prof-img {
   vertical-align: bottom;
 }
@@ -541,6 +681,9 @@ progress-arc{
 .form-control{
   background-color: #eee;
 }
+.ng-modal-dialog .form-control{
+  width: 100%;
+}
 .rooms,.messages {
   border: 1px solid #e8e7e8;
   margin: 20px;
@@ -548,6 +691,7 @@ progress-arc{
  
 .room {
   border: 1px solid #c7c7c7;
+  text-shadow: 0 -.5px rgba(0,0,0,0.69);
   margin-bottom: -1px;
   background-color: #eee;
   -webkit-transition: background .5s;
@@ -606,12 +750,30 @@ progress-arc{
 
 .l-demo-container {
   width: 70%;
-  height: 90px;
   position: absolute;
   bottom: 40px;
   left:15%; 
 }
+.chatwrap {
+  border: 1px solid black;
+  position: absolute;
+  height: 150px;
+  width: 90%;
+  border-radius: 0px 0px 60px 60px; 
+  bottom: 0px;
+  background: #777;
 
+  background: #e2baac; /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover, #e2baac 0%, #533a11 67%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#e2baac), color-stop(67%,#533a11)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover, #e2baac 0%,#533a11 67%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover, #e2baac 0%,#533a11 67%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover, #e2baac 0%,#533a11 67%); /* IE10+ */
+background: radial-gradient(ellipse at center, #e2baac 0%,#533a11 67%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2baac', endColorstr='#533a11',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+left: 23px;
+  z-index: -1;
+}
 .l-popout {
   margin: 0;
   padding: 0;
@@ -633,7 +795,11 @@ progress-arc{
   padding: 0px;
   font-size: 1em;
   line-height: 1em;
-  color: #666; }
+  color: #666; 
+  position: relative;
+  bottom: 0;
+  z-index: 0; 
+}
   .example-chat header {
     background-color: #EEE;
     background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#DDDDDD));
@@ -708,7 +874,8 @@ progress-arc{
 
 #example-messages{
   text-align: left;
-  font-size:.8em; 
+  font-size:.8em;
+  overflow-y: scroll; 
 }
 
 #colorholder {
@@ -804,6 +971,7 @@ progress-arc{
   width: 100%;
 }
 .wrapperrooms{
+  position: relative;
   display: table;
   height: 80%;
   width: 100%;
@@ -841,22 +1009,11 @@ progress-arc{
   z-index: 100;
 }
 
-.ng-hide-add, .ng-hide-remove {
-    /* ensure visibility during the transition */
-    display: inline-block !important; /* yes, important */
-}
 .card.ng-hide-remove{
   animation: flipInY 1s;
 }
 .card.ng-hide-add{
   animation: flipOutY 1s;
-}
-
-div.ng-enter {
-  animation: fadeIn .5s;
-}
-div.ng-leave {
-  animation: fadeOut .5s;
 }
 
 .card {
@@ -918,6 +1075,32 @@ div.ng-leave {
   text-shadow: 0 -1px rgba(119, 119, 119, 0.69);
   font-family: 'Fjalla One', 'sans-serif';
 }
+.ng-modal-close:active {
+  color: #d9534f;
+  text-shadow: 0 -1px #d43f3a;
+}
+.buyInModal h4,
+.buyInModal h5,
+.buyInModal .modal-body{
+  text-align: center;
+}
+.rotate{
+  -webkit-transition-duration:0.8s;
+  -moz-transition-duration:0.8s; 
+  -o-transition-duration:0.8s;
+  transition-duration:0.8s;    
+  -webkit-transition-property: -webkit-transform;    
+  -moz-transition-property: -moz-transform;    
+  -o-transition-property: -o-transform;    
+  transition-property: transform;
+  overflow:hidden;    
+}  
+ 
+.rotate:hover  {
+  -webkit-transform:rotate(360deg);
+  -moz-transform:rotate(360deg);   
+  -o-transform:rotate(360deg);
+} 
 
 @media (min-width: 768px){
   #mainContain {

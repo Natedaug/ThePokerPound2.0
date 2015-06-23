@@ -1,14 +1,17 @@
 <!doctype html>
 <html class="no-js">
   <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
+    
+    <title>ThePokerPound</title>
+    <meta name="description" content="An online multiplayer poker game that is 100% free.  Compete against other players or our own custom bots and put your poker skills to the test.">
     <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -18,7 +21,7 @@
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Average' rel='stylesheet' type='text/css'>
   </head>
-  <body ng-app="thePokerPound20App">
+  <body ng-app="thePokerPound20App" >
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -70,6 +73,7 @@
     <script src="bower_components/angularfire/dist/angularfire.js"></script>
     <script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
     <script src="bower_components/angular-progress-arc/angular-progress-arc.js"></script>
+    <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -82,11 +86,11 @@
         <script src="scripts/controllers/auth.js"></script>
         <script src="scripts/services/auth.js"></script>
         <script src="scripts/services/table.js"></script>
-        <script src="scripts/controllers/nav.js"></script>
         <script src="scripts/directives/seatdir.js"></script>
         <script src="scripts/directives/modal.js"></script>
         <script src="scripts/directives/emailBox.js"></script>
         <script src="scripts/directives/leaderBoard.js"></script>
+        <script src="scripts/directives/newRoomForm.js"></script>
         <!-- endbuild -->
 </body>
 </html>

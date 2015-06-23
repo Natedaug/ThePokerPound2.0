@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory("Table", function() {
+app.factory('Table', function() {
 
 	function Table(smallBlind, bigBlind, minPlayers, maxPlayers, minBuyIn, maxBuyIn) {
 	    this.smallBlind = smallBlind;
@@ -13,7 +13,7 @@ app.factory("Table", function() {
 	    this.maxBuyIn = maxBuyIn;
 	    this.game = new Game(this.smallBlind, this.bigBlind);
 	    this.seats = new Array(maxPlayers); //list of empty seats
-	    for(var i = 0; i < maxPlayers; i++){ this.seats[i] = false; };
+	    for(var i = 0; i < maxPlayers; i++){ this.seats[i] = false; }
 	    //Validate acceptable value ranges.
 	    var err;
 	    if (minPlayers < 2) { //require at least two players to start a game.
@@ -144,34 +144,35 @@ app.factory("Table", function() {
 	}
 	
 	//sets up table for each betting round
+
 	function startRound(table){
 	    var i, failSafe = 0;
 	    
 	    for (i = 0; i < table.game.bets.length; i += 1) {
-	        table.game.bets[i] = 0;
+	        this.game.bets[i] = 0;
 	    }
 	    for (i = 0; i < table.players.length; i += 1) {
-	        table.players[i].talked = false;
+	        this.players[i].talked = false;
 	    }
 	    table.game.maxBet = 0;
 
 	    table.game.actionEnd = table.dealer;
 	    while (table.players[table.game.actionEnd].folded === true && failSafe < table.players.length) { //set action end
-	        table.game.actionEnd--;
+	        this.game.actionEnd--;
 	        failSafe++;
 	        if (table.game.actionEnd === -1){
-	            table.game.actionEnd = table.players.length - 1;
+	            this.game.actionEnd = this.players.length - 1;
 	        }
 	    } 
 	    failSafe = 0;
 
-	    table.game.actionOn = table.dealer;
+	    this.game.actionOn = this.dealer;
 	    
 	    do{ //set action on
-	        table.game.actionOn++;
+	        this.game.actionOn++;
 	        failSafe++;
 	        if (table.game.actionOn === table.players.length){
-	            table.game.actionOn = 0;
+	            this.game.actionOn = 0;
 	        }   
 	    } while ((table.players[table.game.actionOn].folded === true || table.players[table.game.actionOn].allIn === true) && failSafe < table.players.length);
 	    
@@ -186,11 +187,13 @@ app.factory("Table", function() {
 	        }
 	    }
 	    if((playersRemaining - playersAllin) === 1){
-	        table.game.actionOn = table.game.actionEnd;
+	        this.game.actionOn = this.game.actionEnd;
 	        progress(table);
 	    }
 
 	}
+
+	Table.prototype.startRound = startRound;
 
 	function checkForEndOfRound(table) {
 	    var endOfRound = false;
@@ -204,8 +207,23 @@ app.factory("Table", function() {
 	            failSafe++;
 	            if (table.game.actionOn === table.players.length){
 	                table.game.actionOn = 0;
-	            }   
+	            }
 	        } while ((table.players[table.game.actionOn].folded === true || table.players[table.game.actionOn].allIn === true) && failSafe < table.players.length);
+	    	if(table.game.actionOn === table.game.actionEnd) {
+            	var playersRemaining = 0;
+			    var playersAllin = 0;
+			    for (var i = 0; i < table.players.length; i += 1) {
+			        if (table.players[i].folded === false) {
+			            playersRemaining++;
+			        }
+			        if(table.players[i].allIn === true){
+			            playersAllin++;
+			        }
+			    }
+			    if((playersRemaining - playersAllin) === 1){
+			    	endOfRound = true;
+			    }
+            } 
 	    }
 	    return endOfRound;
 	}
@@ -238,7 +256,7 @@ app.factory("Table", function() {
 	                table.game.deck.pop(); //Burn a card
 	                table.game.board.push(table.game.deck.pop()); //Turn a card
 	                
-	                startRound(table);
+	                //startRound(table);
 
 	            } else if (table.game.roundName === 'Flop') {
 	                console.log('effective flop');
@@ -246,7 +264,7 @@ app.factory("Table", function() {
 	                table.game.deck.pop(); //Burn a card
 	                table.game.board.push(table.game.deck.pop()); //Turn a card
 	                
-	                startRound(table);
+	                //startRound(table);
 
 	            } else if (table.game.roundName === 'Deal') {
 	                console.log('effective deal');
@@ -257,7 +275,7 @@ app.factory("Table", function() {
 	                    table.game.board.push(table.game.deck.pop());
 	                }
 
-	                startRound(table);
+	                //startRound(table);
 	                
 	            }
 	        }
@@ -305,7 +323,7 @@ app.factory("Table", function() {
 	        fillDeck(this.game.deck);
 	        this.NewRound();
 	    }else{
-	        console.log("You need more players!");
+	        console.log('You need more players!');
 	    }
 	};
 
@@ -317,7 +335,7 @@ app.factory("Table", function() {
 	        }
 	    }
 	    return table.players.length;
-	};
+	}
 
 	//update other users
 	Table.prototype.AddPlayer = function (playerName, chips, seat, usr) {
@@ -339,9 +357,9 @@ app.factory("Table", function() {
 		        if(this.players[i].seat === seat){
 		            this.seats[seat] = false; //seat open
 		            this.players.splice(i,1);
-		            for(var i = seat; i < this.seats.length; i++){
-		                if(this.seats[i]||this.seats[i]===0){
-		                    this.seats[i]--;
+		            for(var j = seat; j < this.seats.length; j++){
+		                if(this.seats[j]||this.seats[j]===0){
+		                    this.seats[j]--;
 		                }
 		            }
 		        }
@@ -351,7 +369,7 @@ app.factory("Table", function() {
 			console.log("Please wait til end of round to remove players")
 			return false;
 		}*/
-	}
+	};
 
 	Table.prototype.NewRound = function() {
 	    if (this.players.length >= this.minPlayers) {
@@ -363,7 +381,7 @@ app.factory("Table", function() {
 	            this.game.bets[i] = 0;
 	            this.game.roundBets[i] = 0;
 	        }
-	        this.game.winners = " ";
+	        this.game.winners = ' ';
 	        //Identify Small and Big Blind player indexes
 	        smallBlind = this.dealer + 1;
 	        if (smallBlind >= this.players.length) {
@@ -381,18 +399,20 @@ app.factory("Table", function() {
 	        //Force Blind Bets
 	        this.players[smallBlind].chips -= this.smallBlind;
 	        this.players[bigBlind].chips -= this.bigBlind;
+
 	        this.game.bets[smallBlind] = this.smallBlind;
 	        this.game.bets[bigBlind] = this.bigBlind;
+
 	        this.game.maxBet = this.bigBlind;
 	        this.game.actionOn = this.dealer + 3;
 	        if (this.game.actionOn >= this.players.length) {
 	            this.game.actionOn -= this.players.length;
 	        }
-	        if(this.players.length === 2){ this.game.actionOn = smallBlind};//adjust for heads up play
+	        if(this.players.length === 2){ this.game.actionOn = smallBlind; }//adjust for heads up play
 	        this.game.actionEnd = bigBlind;
 	        return true;
 	    } else { 
-	    	console.log("You need more players");
+	    	console.log('You need more players');
 	    	return false;
 	    }
 	};
@@ -433,8 +453,8 @@ app.factory("Table", function() {
                 table.game.bets[i] = bet;
                 table.game.maxBet = bet;
                 table.players[i].chips -= bet;
-                table.players.talked = true;
-
+                this.talked = true;
+                
                 table.game.actionEnd = table.game.actionOn;
                 do {
                     table.game.actionEnd--;
@@ -458,13 +478,13 @@ app.factory("Table", function() {
 
 	Player.prototype.Call = function(table) {
 	    var maxBet, i, j, failSafe = 0;
-	    maxBet = table.game.maxBet;
+	    maxBet = Number(table.game.maxBet);
 	    i = seatToPlayerIndex(this.seat, table);
 	        
 	    if (table.game.actionOn === i && this.folded === false && this.allIn === false) {
 	        if (this.chips > maxBet) {
-	            this.chips += table.game.bets[i];
-	            this.chips -= maxBet;
+	            this.chips = Number(this.chips) + Number(table.game.bets[i]);
+	            this.chips -= Number(maxBet);
 	            table.game.bets[i] = maxBet;
 
 	            this.talked = true;

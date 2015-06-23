@@ -7,8 +7,7 @@ app.controller('AngPokerController',
       $scope.rooms = $firebaseArray(ref);
       $scope.isEmailVisible = false;
       $scope.isLeaderBoardVisible = false;
-
- 	  //this.user = Auth.user;
+      $scope.isNew = false;
 
  	  if(!user){
   		$location.path('/');
@@ -17,7 +16,6 @@ app.controller('AngPokerController',
   	  	$scope.user.profile = $firebaseObject(ref2.child('profile').child(user.uid));
   	  }
   	  
-  	  //do email and leaderboar loading in this controller and pass the info to directives
 
   	  $scope.toggleEmailVisibility = function() {
   	  	$scope.isEmailVisible = !$scope.isEmailVisible;
@@ -32,12 +30,46 @@ app.controller('AngPokerController',
   	  	}
   	  };
 
+  	  $scope.refillBalance = function() {
+  	  	if($scope.user.profile.balance < 1000){
+  	  		$scope.user.profile.balance = 1000;
+  	  		$scope.user.profile.$save();
+  	  	}
+  	  };
+
+  	  $scope.isEditProfileVisible = false;
+
+	  $scope.showEditProfile = function () {
+	    $scope.isEditProfileVisible = true;
+	  };
+
+	  $scope.closeEditProfile = function () {
+	    $scope.isEditProfileVisible = false;
+	    $scope.user.profile.$save();
+	  };
+
 	  $scope.newRoom = function() {
-	    ref.push({
-	      createdBy: $scope.user.profile.username,
-	      roomname: $scope.roomName,
-	      createddate: Date.now()
-	    });
+	    if($scope.roomForm.gameType === 'Cash'){
+	    	ref.push({
+ 		  	  blindLevel: $scope.roomForm.blindLevel,
+ 		  	  createdBy: $scope.user.profile.username,
+		      roomname: $scope.roomName,
+		      maxPlayers: $scope.roomForm.maxPlayers,
+		      gameType: $scope.roomForm.gameType,
+		      players: 0,
+		      createddate: Date.now()
+ 		  	});
+	    } else if($scope.roomForm.gameType === 'Sit-n-Go'){
+	    	ref.push({
+ 		  	  buyIn: $scope.roomForm.buyIn,
+ 		  	  createdBy: $scope.user.profile.username,
+		      roomname: $scope.roomName,
+		      maxPlayers: $scope.roomForm.maxPlayers,
+		      gameType: $scope.roomForm.gameType,
+		      players: 0,
+		      createddate: Date.now()
+ 		  	});
+	    }
 	    $scope.isNew = false;
 	    $scope.rooms = $firebaseArray(ref);
 	  };
@@ -47,7 +79,7 @@ app.controller('AngPokerController',
 	      if (error) {
 	        console.log('Error:', error);
 	      } else {
-	        console.log('Profile removed successfully!');
+	        console.log('Room removed successfully!');
 	      }
 	    });
 	  };

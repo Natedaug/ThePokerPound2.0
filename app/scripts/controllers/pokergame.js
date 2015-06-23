@@ -1,15 +1,18 @@
- 'use strict';
+'use strict';
 
 app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObject, $routeParams, FIREBASE_URL, $scope, $timeout, Auth, Table, user, $location) {
 	var ref = new Firebase(FIREBASE_URL+'/pokerrooms/' + $routeParams.roomid );
 	var messRef = new Firebase(FIREBASE_URL+'/pokerrooms/' + $routeParams.roomid+'/messages/');
 	$scope.messages = $firebaseArray(messRef);
 
+	//test multiplayer
+    //update git and site
+
 	var ref2 = new Firebase(FIREBASE_URL);
 	var profileRef = ref2.child('profile').child(user.uid);
 	var profileRef2 = ref2.child('profile');
 	$scope.userList = $firebaseObject(profileRef2);
-	//$scope.collectWager=false;
+	
 	$scope.timeLimit = 1;
 	var stopTimeLimit;
 
@@ -20,22 +23,52 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 	  	$scope.user.profile = $firebaseObject(profileRef);
 	}
 
+	$scope.signedIn = Auth.signedIn;
+	$scope.logout = Auth.logout; 
+
 	var pokerGame = $firebaseObject(ref);
 	$scope.table = new Table(10,20,2,10,100,1000);
 
-	pokerGame.$loaded().then(function(){ 
+	pokerGame.$loaded().then(function(){
 		$scope.roomMaster = pokerGame.createdBy;  											
 		if (!pokerGame.pokertable){   		//creates game if one isnt created
 	  	 ref.child('pokertable').update($scope.table);
 	  		pokerGame.$watch(loadGame);
 	  		console.log($scope.table);
 		} else {	                       //continue game if ones in progress
+			var roomUnderControl = false;
 	  		loadGame();
 	  		pokerGame.$watch(loadGame);
+	  		
 	  		if($scope.roomMaster===user.profile.username){
 	  			trackAction();
+	  		}else{                        //set controller if master wasn't there
+	  			$scope.table.players.forEach(function(element, index){
+		  			if($scope.table.players[index].playerName === $scope.roomMaster){
+		  				roomUnderControl = true;
+		  			}
+		  		});
+		  		if(!roomUnderControl){
+		  			$scope.roomMaster = user.profile.username;
+		  			pokerGame.createdBy = $scope.roomMaster;
+		  			pokerGame.$save();
+		  			trackAction();
+		  		}
 	  		}
 		}
+	});
+
+	$scope.$watch('roomMaster', function(newValue, oldValue) {
+		console.log('old ' + oldValue + ' new ' + newValue);
+		if(newValue !== oldValue && oldValue !== undefined){
+			console.log('Room master switch');
+		    
+			trackAction();
+		}
+	});
+
+	$scope.messages.$loaded().then(function(){
+		$scope.messagesOnLoadLength = $scope.messages.length - 3; //Only display messages from entering room
 	});
 
 	$scope.addMessage = function(e) {
@@ -51,7 +84,7 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
     };
 
     var loadGame = function() {
-		
+		$scope.roomMaster = pokerGame.createdBy;
 		for(var k in pokerGame.pokertable) {
 	  	
 			if(k === 'game'){
@@ -86,13 +119,20 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 		}
 		console.log($scope.table);
 	};
-
+	
 	var trackAction = function() {
 	  $scope.$watch('[table.game.actionOn,table.game.roundName]', function(newValue, oldValue) {
-  		if($scope.table.game.actionOn !== undefined&&$scope.table.game.actionOn !== false&&$scope.table.players[$scope.table.game.actionOn].user === 'bot' && $scope.table.game.roundName!=='Showdown'){
+  		if($scope.table.game.actionOn !== undefined&&$scope.table.game.actionOn !== false&&($scope.table.players[$scope.table.game.actionOn].user === 'bot' || $scope.table.players[$scope.table.game.actionOn].user === 'foldBot') && $scope.table.game.roundName!=='Showdown'){
+  			var actionOn = $scope.table.game.actionOn;
   			console.log('bot '+ $scope.table.players[$scope.table.game.actionOn].playerName+' turn');
   			$timeout(function(){
-  				botAction();
+  				if($scope.table.players[actionOn].user === 'foldBot'){
+  					 $scope.table.players[actionOn].Fold($scope.table);
+  					 $scope.table.players[newValue[0]].actionDescription = [$scope.table.players[$scope.table.game.actionOn].playerName, 'fold'];
+  				} else {
+  					$scope.table.players[newValue[0]].actionDescription = botAction(actionOn);
+  				}
+  				ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
   				$interval.cancel(stopTimeLimit);
   				$scope.timeLimit = 1;
   			}, 1500);
@@ -102,7 +142,7 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
   			$timeout(function(){
 				stopTimeLimit = $interval(function() {
 					if($scope.timeLimit > 0){
-  						$scope.timeLimit -= 0.01;
+  						$scope.timeLimit = Math.round(($scope.timeLimit - 0.01)*100)/100;
   					} else {
   						$scope.fold($scope.table.players[$scope.table.game.actionOn].seat);
   					}
@@ -112,19 +152,31 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
   		}
   		if(oldValue[1]!==newValue[1]){
   			//$scope.collectWager; use directive to animate wager collect?
-  			$scope.messages.$add({from: '', body: $scope.table.game.roundName});
+  			$scope.messages.$add({from: '-'+$scope.table.game.roundName+'-', body: ''});
   			if(newValue[1] ==='Showdown'){
-  				$scope.messages.$add({from: '', body: $scope.table.game.winners});
+  				$scope.messages.$add({from: $scope.table.game.winners, body: ''});
+  				for(var i in pokerGame.pokertable.players) {
+					//add player for any player in the database
+					if( pokerGame.pokertable.players[i].user === 'foldBot' ){
+	  					$scope.removePlayer(pokerGame.pokertable.players[i].seat); 
+	  				}
+	  			}
+  			} else if(newValue[1] !== 'Deal'){
+  				$timeout(function(){
+  					$scope.table.startRound($scope.table);
+  					ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
+  				}, 1500);
   			}
   		}
 	  },true);
 	};
 
-	var botAction = function() {
-		var botMove = pokerBot();
-		$scope.messages.$add({from: '', body: botMove});
+	var botAction = function(actionOn) {
+		var botMove = pokerBot(actionOn);
+		$scope.messages.$add({from: botMove[0], body: botMove[1]});
 		$scope.msg = '';
-		ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
+		
+		return botMove[1];
 	};
 
 	$scope.newHand = function(){
@@ -142,15 +194,18 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 
 	$scope.call = function (seat) {
 		$interval.cancel(stopTimeLimit);
-  		$scope.timeLimit = 1;
+  		$scope.timeLimit = 1;	
 		$scope.table.players[$scope.table.seats[seat]].Call($scope.table);
+	
 		if($scope.table.game.maxBet === 0){
-			$scope.messages.$add({from: '', body: user.profile.username + ' checks'});
+			$scope.messages.$add({from: user.profile.username, body: 'checks'});
 			$scope.msg = '';
+			$scope.table.players[$scope.table.seats[seat]].actionDescription = 'checks';
 		}
 		else{
-			$scope.messages.$add({from: '', body: user.profile.username + ' calls'});
+			$scope.messages.$add({from: user.profile.username, body: 'calls'});
 			$scope.msg = '';
+			$scope.table.players[$scope.table.seats[seat]].actionDescription = 'calls';
 		}
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
@@ -158,9 +213,11 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 	$scope.raise = function (seat) {
 		$interval.cancel(stopTimeLimit);
   		$scope.timeLimit = 1;
-		$scope.table.players[$scope.table.seats[seat]].Bet(20,$scope.table);
-		$scope.messages.$add({from: '', body: user.profile.username + ' raises'});
+		$scope.table.players[$scope.table.seats[seat]].Bet(40,$scope.table);
+		console.log(user.profile.username + ' raise');
+		$scope.messages.$add({from: user.profile.username, body:  'raises'});
 		$scope.msg = '';
+		$scope.table.players[$scope.table.seats[seat]].actionDescription = 'raises';
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
 
@@ -168,18 +225,22 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 		$interval.cancel(stopTimeLimit);
   		$scope.timeLimit = 1;
 		$scope.table.players[$scope.table.seats[seat]].Fold($scope.table);
-		$scope.messages.$add({from: '', body: user.profile.username + ' folds'});
+		$scope.messages.$add({from: user.profile.username, body: 'folds'});
 		$scope.msg = '';
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
 
 	$scope.addPlayer = function (seat) {
 		$scope.table.AddPlayer(chance.name(), 1000, seat, 'bot');
+		pokerGame.players++;
+		pokerGame.$save();
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
 
 	$scope.removePlayer= function (seat) {
 		$scope.table.RemovePlayer(seat);
+		pokerGame.players--;
+		pokerGame.$save();
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
 
@@ -189,20 +250,47 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 		 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));	
 		}
 	};
+	$scope.buyIn = function(seat){
+		$scope.isBuyInVisible=true;
+		$scope.userSeatTemp = seat;
+	};
 
-	$scope.sitDown = function(seat) {	
+	$scope.sitDown = function(buyIn) {	
+		$scope.isBuyInVisible=false;  //close buy-in modal
+		
 		$scope.user.profile.sitting = true;
-		$scope.user.profile.seat = seat;
-
-		$scope.table.AddPlayer($scope.user.profile.username, $scope.user.profile.balance, seat, user.uid);
+		$scope.user.profile.seat = $scope.userSeatTemp;
+		$scope.user.profile.balance = Number($scope.user.profile.balance) - Number(buyIn);
+		$scope.user.profile.$save();
+		pokerGame.players++;
+		pokerGame.$save();
+		$scope.table.AddPlayer($scope.user.profile.username, buyIn, $scope.user.profile.seat, user.uid);
 
 		$scope.user.profile.$save();
 	 	ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 	};
 
 	$scope.$on('$destroy', function(){
+		if($scope.roomMaster===user.profile.username){
+			$scope.table.players.forEach(function(element, index){
+	  			if($scope.table.players[index].user !== 'bot'&& $scope.table.players[index].playerName !== user.profile.username){
+	  				$scope.roomMaster = $scope.table.players[index].playerName;
+	  				pokerGame.createdBy = $scope.roomMaster;
+		  			pokerGame.$save();
+	  			}
+	  		});
+		}
+		if($scope.user.profile.sitting){
+			$scope.user.profile.balance = Number($scope.user.profile.balance) + Number($scope.table.players[$scope.table.seats[$scope.user.profile.seat]].chips);
+			$scope.removePlayer($scope.user.profile.seat);
+			if($scope.table.game.roundName	!== 'Showdown' && $scope.roomMaster!==user.profile.username){
+				$scope.table.AddPlayer($scope.user.profile.username, 1000, $scope.user.profile.seat, 'foldBot');
+			}
+			ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
+		}
+
+		//*add fold bot that will fold til showdown then be removed*
 		
-		$scope.removePlayer($scope.user.profile.seat);
 		$scope.user.profile.sitting = false;
 		$scope.user.profile.seat = -1;
 		$scope.user.profile.$save();
@@ -213,8 +301,8 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 
 	//COMPUTER AI
 
-	function pokerBot() {
-		var action = $scope.table.game.actionOn;
+	function pokerBot(actionOn) {
+		var action = actionOn;
 		var maxBet = $scope.table.game.maxBet;
 		var thisBet = $scope.table.game.maxBet - $scope.table.game.bets[action];
 		var player = $scope.table.players[action].playerName;
@@ -275,8 +363,8 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 			    break;
 		}
 
-		return player + ' ' + wager;
-
+		//return player + ' ' + wager;
+		return [player,wager];
 	}
 
 		//poker bot functions

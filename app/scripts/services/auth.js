@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('Auth', function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootScope) {
+app.factory('Auth', function($firebaseObject, $firebaseArray, $firebaseAuth,FIREBASE_URL, $rootScope, $location) {
   var ref = new Firebase(FIREBASE_URL);
   var auth = $firebaseAuth(ref);
 
@@ -22,7 +22,22 @@ app.factory('Auth', function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootS
         };
 
         var profileRef = new Firebase(FIREBASE_URL+'/profile/'+user.uid);
+        //add welcome message to mailbox
+        var date = new Date();
+        var msg = { 
+            from: 'Natedaug',
+            to: user.username, 
+            subject: 'Welcome to the PokerPound!', 
+            date: date.toDateString(), 
+            body: '   Hi, welcome to the PokerPound. Thanks for signing up. The site is currently under construction. Feel free to pMail  me any questions or comments you may have regarding the site. Stick around, challenge friends and have fun.',
+            read: false
+          };
+          var emailWelcomeMsg = $firebaseArray(profileRef.child('messages'));
+          emailWelcomeMsg.$loaded().then(function () {    
+            emailWelcomeMsg.$add(msg);
+          });
         return profileRef.set(profile);
+
       },
       signedIn: function () {
         if(auth.$getAuth()){
@@ -47,6 +62,7 @@ app.factory('Auth', function($firebaseObject, $firebaseAuth,FIREBASE_URL, $rootS
       logout: function () {
         auth.$unauth();
         $rootScope.$broadcast('$firebaseAuth:unauth');
+        $location.path('/');
       },
       resolveUser: function () {
       	return auth.$getAuth();    //get current User
