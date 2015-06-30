@@ -251,12 +251,12 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 		}
 	};
 	$scope.buyIn = function(seat){
-		$scope.isBuyInVisible=true;
+		$scope.isBuyInVisible = true;
 		$scope.userSeatTemp = seat;
 	};
 
 	$scope.sitDown = function(buyIn) {	
-		$scope.isBuyInVisible=false;  //close buy-in modal
+		$scope.isBuyInVisible = false;  //close buy-in modal
 		
 		$scope.user.profile.sitting = true;
 		$scope.user.profile.seat = $scope.userSeatTemp;
@@ -288,13 +288,10 @@ app.controller('PokergameCtrl', function($interval,$firebaseArray, $firebaseObje
 			}
 			ref.child('pokertable').update(angular.fromJson(angular.toJson($scope.table)));
 		}
-
-		//*add fold bot that will fold til showdown then be removed*
 		
 		$scope.user.profile.sitting = false;
 		$scope.user.profile.seat = -1;
 		$scope.user.profile.$save();
-		//pokerGame.$destroy();
 		
 		console.log('BuBye!!!');
 	});

@@ -144,7 +144,7 @@
 		      <div class="input-group-addon">.00</div>
 		    </div>
 		  </div>
-		  <button type="submit" class="btn btn-primary" ng-click="sitDown(buyInInput)">Buy In</button>
+		  <button type="submit" class="btn btn-primary" ng-disabled="buyInInput<100 || buyInInput>1000 || buyInInput===undefined" ng-click="sitDown(buyInInput)">Buy In</button>
 		</form>
       </div>
       <h5>Max: <span class="moneyText">$1,000</span> | Min: <span class="moneyText">$100</span></h5>
